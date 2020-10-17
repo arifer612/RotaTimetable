@@ -163,43 +163,86 @@ class Personnel(Role):
         return f"{self.name} @ {self.role}"
 
 
+class Appliance(object):
+    def __init__(self, name, crew, minimum=1, maximum=1):
+        if not crew:
+            raise ValueError(f"Assign minimum crew of {name}")
+        elif type(crew) is not dict:
+            raise TypeError("Crew has to be represented as a dictionary")
+        if minimum < maximum:
+            raise ValueError(f"Minimum cannot be less than the maximum")
+        maximum = maximum if maximum >= sum(crew.values()) else sum(crew.values())
+
+        self._appliance, self._crew, self.limits  = name, crew, [minimum, maximum]
+
+    @property
+    def appliance(self):
+        return self._appliance
+
+    @appliance.setter
+    def appliance(self, newName):
+        self._appliance = newName
+
+    @property
+    def crew(self):
+        self._crew = {i: v for (i, v) in self._crew.items() if v}
+        return self._crew
 
     def __repr__(self):
-        return f"ROLE: {self.role}\nRULE: {self.constraints if self.constraints else 'NONE'}"
+        return f"{self.crew}"
 
-    def changeName(self, newName):
-        self.__name__ = str(newName)
-        
-        
-class Appliance:
-    def __init__(self, name):
-        self.__name__ = name
-        self.rules, self.priority = None, None
-        
-    def setRules(self, rules):
-        self.rules = rules
-    
-    def setPriority(self, priority):
-        self.priority = priority
-        
+    def change(self, role, value=None, maximum=None):
+        self.limits[1] = maximum
+        crew = self.crew
+        if type(role) is dict:
+            for i, j in role.items():
+                if type(j) is not int:
+                    raise TypeError("Only integer values are allowed")
+            crew.update(role)
+            if sum(crew.values()) > self.limits[1]:
+                raise ValueError("Total crew exceeds maximum of the appliance")
+            else:
+                self._crew.update(role)
+        elif not value:
+            raise AttributeError(f"Number of {role} has to be declared")
+        elif type(value) is not int:
+            raise TypeError("Only integer values are allowed")
+        else:
+            crew.update({role: value})
+            if sum(crew.values()) > self.limits[1]:
+                raise ValueError("Total crew exceeds maximum of the appliance")
+            else:
+                self._crew.update({role: value})
 
-class Role:
-    def __init__(self, role):
-        self.role = role
-        self.constraints = {}
-        
-    def _rules(self, constraint):
-        self.constraints.update(constraint)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+class Vehicle(Appliance):
+    def __init__(self, callsign, appliance, plateNumber, active=True):
+        if type(appliance) is not Appliance:
+            raise TypeError(f"{appliance} is not an Appliance. Create the object first")
+        self._callsign, self._plateNumber, self.active = callsign, plateNumber, active
+        super().__init__(appliance.appliance, appliance.crew, *appliance.limits)
+
+    @property
+    def callsign(self):
+        return self._callsign
+
+    @callsign.setter
+    def callsign(self, newCallsign):
+        self._callsign = newCallsign
+
+    @property
+    def plate(self):
+        return self._plateNumber
+
+    @plate.setter
+    def plate(self, newPlate):
+        self._plateNumber = newPlate
+
+    def OnRun(self):
+        self.active = True
+
+    def OffRun(self):
+        self.active = False
+
+    def __repr__(self):
+        return f"{self.callsign} ({self.plate}) -- {'On run' if self.active else 'Off run'}"
