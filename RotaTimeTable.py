@@ -146,6 +146,23 @@ class Role:
         return f"{self.constraints if self.constraints else 'NONE'}"
 
 
+class Personnel(Role):
+    def __init__(self, name, role=None):
+        self._name = name
+        super().__init__(role)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, newName):
+        self._name = newName
+
+    def __repr__(self):
+        return f"{self.name} @ {self.role}"
+
+
 
     def __repr__(self):
         return f"ROLE: {self.role}\nRULE: {self.constraints if self.constraints else 'NONE'}"
