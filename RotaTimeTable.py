@@ -103,19 +103,21 @@ class Personnel:
             print(f"ERROR: {role} does not exist. Create {role} with Role()")
 class Role:
     def __init__(self, name: str, constraint: Union[dict, list, str, None]=None, rule: bool=False, inherit: [list, Role, None]=None):
+class Role(object):
+    def __init__(self, name, constraint=None, rule=False, inherit=None):
         self.role = name
 
         if type(rule) is not bool:
             raise TypeError("Only boolean rules are allowed")
 
-        if constraints:
-            if type(constraints) is dict:
-                for i, j in constraints:
+        if constraint:
+            if type(constraint) is dict:
+                for i, j in constraint:
                     if type(j) is not bool:
                         raise TypeError("Only boolean rules are allowed")
                     self._constraints = constraint
-            elif type(constraints) is list:
-                self._constraints = {i: rule for i in list}
+            elif type(constraint) is list:
+                self._constraints = {i: rule for i in constraint}
             else:
                 self._constraints = {constraint: rule}
         else:
