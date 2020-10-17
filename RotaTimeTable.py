@@ -101,9 +101,55 @@ class Personnel:
     def addRole(self, role):
         if type(role) != Role:
             print(f"ERROR: {role} does not exist. Create {role} with Role()")
+class Role:
+    def __init__(self, name: str, constraint: Union[dict, list, str, None]=None, rule: bool=False, inherit: [list, Role, None]=None):
+        self.role = name
+
+        if type(rule) is not bool:
+            raise TypeError("Only boolean rules are allowed")
+
+        if constraints:
+            if type(constraints) is dict:
+                for i, j in constraints:
+                    if type(j) is not bool:
+                        raise TypeError("Only boolean rules are allowed")
+                    self._constraints = constraint
+            elif type(constraints) is list:
+                self._constraints = {i: rule for i in list}
+            else:
+                self._constraints = {constraint: rule}
         else:
-            self._role = role
-        
+            self._constraints = {}
+
+        if inherit:
+            inherit = inherit if type(inherit) is list else [inherit]
+            [self + i for i in inherit]
+
+    @property
+    def constraints(self):
+        if type(self._constraints) is dict:
+            return self._constraints
+
+    def constraint(self, constraint=None, rule=False):
+        if constraint:
+            self._constraints.update({constraint: rule})
+
+    def __add__(self, other):
+        if type(other) is not Role:
+            raise TypeError("Only Roles can be added to Roles")
+        else:
+            for constraint, rule in other.constraints.items():
+                if constraint not in self.constraints:
+                    self.constraint(constraint, rule)
+
+    def __repr__(self):
+        return f"{self.constraints if self.constraints else 'NONE'}"
+
+
+
+    def __repr__(self):
+        return f"ROLE: {self.role}\nRULE: {self.constraints if self.constraints else 'NONE'}"
+
     def changeName(self, newName):
         self.__name__ = str(newName)
         
