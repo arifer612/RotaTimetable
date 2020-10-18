@@ -10,191 +10,38 @@ Script to manage turnouts every shift
 import pickle
 import os
 import sys
-
-
-class Rota:
-    def __init__(self, rota, fileName=None, rootDir="."):
-        if not any([rota, fileName]):
-            sys.exit('Provide rota number to create a new rota or log file directory to load data')
-        else:
-            self.rota, self._fileName, self._rootDir = rota, fileName, rootDir
-            self._personnel, self._appliances = [], []
-            if self._fileName:
-                self._load()
-            else:
-                self._fileName = f"Rota {self.rota}.data"
-                self._rootDir = rootDir
-
-    @property
-    def personnel(self):
-        return self._personnel
-
-    @property
-    def _personnelName(self):
-        return [i.name for i in self._personnel]
-
-    @property
-    def appliances(self):
-        return self._appliances
-
-    @property
-    def _applianceName(self):
-        return [i.name for i in self._appliances]
-
-    def __add__(self, other):
-        if self.rota != other.rota:
-            raise TypeError("Only same rotas can be joined together")
-        else:
-            self.personnel += [i for i in other.personnel if i.name not in self.personnel]
-            self.appliances = self.appliances | other.appliances
-
-    def __sub__(self, other):
-        if self.rota != other.rota:
-            print("ERROR: You can only add the same rota together")
-        else:
-            self.personnel = [i for i in self.personnel
-                              if i not in other.personnel]
-            self.appliances = [i for i in self.appliances
-                               if i not in other.appliances]
-
-    def __len__(self):
-        return len(self.personnel)
-
-    def __repr__(self):
-        return f"Rota {self.rota}"
-
-    def __str__(self):
-        return f"ROTA {self.rota}\n" \
-               f"PERSONNEL: {len(self)}\n" \
-               f"APPLIANCES: {self._checkActive()[0]} on-run; {self._checkActive()[1]} off-run"
-
-    def addPersonnel(self, person):
-        if type(person) == list:
-            if not all([type(i) == Personnel for i in person]):
-                print("ERROR: Some personnel in list do not exist. Create entry using Personnel()")
-            else:
-                [self.personnel.append(i) for i in person if i not in self.personnel]
-        elif type(person) != Personnel:
-            print(f"ERROR: {person} does not exist. Create an entry for {person} using Personnel()")
-        elif person not in self.personnel:
-            self.personnel.append(person)
-        else:
-            pass
-
-    def removePersonnel(self, person):
-        if type(person) == list:
-            if not all([type(i) == Personnel for i in person]):
-                print("ERROR: Some personnel in list do no exist. Remove them from list to continue?\n")
-                print(f"REMOVE -> {', '.join([i for i in person if type(i) != Personnel])}")
-            else:
-                [self.personnel.remove(i) for i in person if i in person]
-        elif type(person) != Personnel:
-            print(f"ERROR: {person} does not exist.")
-        elif person in self.personnel:
-            self.personnel.remove(person)
-        else:
-            pass
-
-    def addRole(self, person, role):
-        if person not in self.personnel:
-            print(f"ERROR: {person} does not exist. Create an entry for {person} with Personnel()")
-        else:
-            person.addRole(role)
-
-    def addAppliance(self, appliance):
-        if type(appliance) == list:
-            if not all([type(i) == Appliance for i in appliance]):
-                print(f"ERROR: Some appliance(s) in list do not exist. Create using Appliance()")
-            else:
-                [self.appliances.append(i) for i in appliance if i not in self.appliances]
-        elif type(appliance) != Appliance:
-            print(f"ERROR: {appliance} does not exist. Create {appliance} using Appliance()")
-        elif appliance not in self.appliances:
-            self.appliances.append(appliance)
-        else:
-            pass
-
-    def removeAppliance(self, appliance):
-        if type(appliance) == list:
-            if not all([type(i) == Appliance for i in appliance]):
-                print("ERROR: Some appliance(s) in list do not exist. Remove them to continue?\n")
-                print(f"REMOVE -> {', '.join([i for i in appliance if type(i) != Appliance])}")
-            else:
-                [self.personnel.remove(i) for i in appliance if i in self.personnel]
-        elif type(appliance) != Personnel:
-            print(f"ERROR: {appliance} does not exist.")
-        elif appliance in self.appliances:
-            self.appliances.remove(appliance)
-        else:
-            pass
-
-    def setPriority(self, appliance, priority):
-        if appliance not in self.appliances:
-            print(f"ERROR: {appliance} does not exist. Create {appliance} using Appliance()")
-        else:
-            appliance.setPriority(priority)
-
-    def setRule(self, target, rule):
-        if target not in (self.appliances, self.personnel):
-            print(f"ERROR: {target} does not exist.")
-        else:
-            target.setRule(rule)
-
-    def _save(self, fileName=None, rootDir=None):
-        if fileName:
-            self.fileName = os.path.splitext(fileName)[0] + ".data"
-        if rootDir:
-            self.rootDir = rootDir
-        data = {'rota': self.rota, 'personnel': self.personnel, 'appliances': self.appliances}
-        with open(os.path.abspath(os.path.expanduser(os.path.join(self.rootDir, self.fileName))), 'wb') as f:
-            pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
-
-    def _load(self):
-        file = os.path.splitext(os.path.join(self.rootDir, self.fileName))[0] + ".data"
-        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
-            print("File does not exist. Creating new rota.")
-        else:
-            with open(os.path.abspath(os.path.expanduser(file)), 'rb') as f:
-                data = pickle.load(f)
-            self.rota = data['rota']
-            self.personnel = data['personnel']
-            self.appliances = data['appliances']
-
-    def print(self):
-        return print(self)
-
-    def _checkActive(self):
-        return len([i for i in self.appliances if i.active]), len([i for i in self.appliances if not i.active])
+import hashlib
 
 
 class Role(object):
     def __init__(self, name, constraint=None, rule=False, inherit=None):
-        self.role = name
+        self.role, self._constraints = name, {}
 
         if type(rule) is not bool:
             raise TypeError("Only boolean rules are allowed")
 
+        if inherit:
+            if isinstance(inherit, Role):
+                self._constraints = inherit.constraints
+            else:
+                raise TypeError("Only <Role> can be inherited")
+
         if constraint:
             if type(constraint) is dict:
                 for i, j in constraint:
+                    if type(i) is not "Vehicle":
+                        raise TypeError("Only <Vehicle> can be added as constraints")
                     if type(j) is not bool:
-                        raise TypeError("Only boolean rules are allowed")
-                    self._constraints = constraint
+                        raise TypeError("Only <boolean> rules are allowed")
+                    self._constraints.update(constraint)
             elif type(constraint) is list:
-                self._constraints = {i: rule for i in constraint}
+                self._constraints.update({i: rule for i in constraint})
             else:
-                self._constraints = {constraint: rule}
-        else:
-            self._constraints = {}
-
-        if inherit:
-            inherit = inherit if type(inherit) is list else [inherit]
-            [self + i for i in inherit]
+                self._constraints.update({constraint: rule})
 
     @property
     def constraints(self):
-        if type(self._constraints) is dict:
-            return self._constraints
+        return self._constraints
 
     def constraint(self, constraint=None, rule=False):
         if constraint:
@@ -202,13 +49,20 @@ class Role(object):
 
     def __add__(self, other):
         if type(other) is not Role:
-            raise TypeError("Only Roles can be added to Roles")
+            print(type(other))
+            raise TypeError("Only <Role> can be added to <Role>")
         else:
-            for constraint, rule in other.constraints.items():
-                if constraint not in self.constraints:
-                    self.constraint(constraint, rule)
+            if other.constraints:
+                for constraint, rule in other.constraints.items():
+                    if constraint not in self.constraints:
+                        self.constraint(constraint, rule)
+            else:
+                pass
 
     def __repr__(self):
+        return self.role
+
+    def __str__(self):
         return f"{self.constraints if self.constraints else 'NONE'}"
 
 
@@ -225,8 +79,26 @@ class Personnel(Role):
     def name(self, newName):
         self._name = newName
 
+    @property
+    def id(self):
+        return hashlib.sha1(f"{self.name} @ {self.role}".encode()).hexdigest()
+
+    @property
+    def constraints(self):
+        return self.role.constraints
+
     def __repr__(self):
-        return f"{self.name} @ {self.role}"
+        return self.id
+
+    def __str__(self):
+        return self.name
+
+    def __call__(self):
+        return {
+            'name': self.name,
+            'role': self.role,
+            'constraints': self.constraints
+        }
 
 
 class Appliance(object):
@@ -235,11 +107,11 @@ class Appliance(object):
             raise ValueError(f"Assign minimum crew of {name}")
         elif type(crew) is not dict:
             raise TypeError("Crew has to be represented as a dictionary")
-        if minimum < maximum:
-            raise ValueError(f"Minimum cannot be less than the maximum")
+        if maximum < minimum:
+            raise ValueError(f"Maximum cannot be less than the minimum")
         maximum = maximum if maximum >= sum(crew.values()) else sum(crew.values())
 
-        self._appliance, self._crew, self.limits  = name, crew, [minimum, maximum]
+        self._appliance, self._crew, self.limits = name, crew, [minimum, maximum]
 
     @property
     def appliance(self):
@@ -282,10 +154,10 @@ class Appliance(object):
 
 
 class Vehicle(Appliance):
-    def __init__(self, callsign, appliance, plateNumber, active=True):
+    def __init__(self, callsign, appliance: Appliance, plateNumber, active: bool = True):
         if type(appliance) is not Appliance:
             raise TypeError(f"{appliance} is not an Appliance. Create the object first")
-        self._callsign, self._plateNumber, self.active = callsign, plateNumber, active
+        self._callsign, self._plateNumber, self._active = callsign, plateNumber, active
         super().__init__(appliance.appliance, appliance.crew, *appliance.limits)
 
     @property
@@ -300,15 +172,190 @@ class Vehicle(Appliance):
     def plate(self):
         return self._plateNumber
 
+    @property
+    def active(self):
+        return self._active
+
+    @active.setter
+    def active(self, val: bool):
+        if type(val) is not bool:
+            raise TypeError("Only boolean values are allowed")
+        self._active = val
+
     @plate.setter
     def plate(self, newPlate):
         self._plateNumber = newPlate
 
-    def OnRun(self):
+    def onRun(self):
         self.active = True
 
-    def OffRun(self):
+    def offRun(self):
         self.active = False
 
     def __repr__(self):
         return f"{self.callsign} ({self.plate}) -- {'On run' if self.active else 'Off run'}"
+
+    def __call__(self):
+        return {
+            'callsign': self.callsign
+        }
+
+
+def safeLoad(function):
+    def runFunction(self, *args, **kwargs):
+        self._load()
+        function(self, *args, **kwargs)
+        self._save()
+
+    return runFunction
+
+
+class Rota(object):
+    def __init__(self, fileName=None, rootDir=".", rota: int = None):
+        if not (rota or fileName):
+            sys.exit('Provide rota number to create a new rota or log file directory to load data')
+        else:
+            self.rota, self._fileName, self._rootDir = rota, fileName, rootDir
+            self._personnel, self._appliances = [], []
+            if not self._fileName:
+                if not rota:
+                    raise NameError("Declare rota number to create a new rota")
+                self._fileName = f"Rota {self.rota}.data"
+                self._rootDir = rootDir
+            self._load()
+
+    @property
+    def personnel(self):
+        return self._personnel
+
+    @property
+    def _personnelID(self):
+        return {i.id[:8]: i for i in self._personnel}
+
+    @property
+    def appliances(self):
+        return self._appliances
+
+    @property
+    def _callsigns(self):
+        return {i.callsign: i for i in self._appliances}
+
+    @property
+    def active(self):
+        return [i for i in self.appliances if i.active]
+
+    def __call__(self, arg=None):
+        if arg:
+            if type(arg) is Personnel or Vehicle:
+                return arg
+            elif type(arg) is str:
+                if arg in self._personnelID:
+                    return self._personnelID[arg]
+                elif arg in self._callsigns:
+                    return self._callsigns[arg]
+                else:
+                    print(f"{arg} does not exist in this rota")
+        else:
+            return {
+                'rota': self.rota,
+                'personnel': self.personnel,
+                'appliances': self.appliances
+            }
+
+    @safeLoad
+    def __add__(self, other):
+        if type(other) is Rota:
+            self._personnel = list(set(self.personnel) | set(other.personnel))
+            self._appliances = list(set(self.appliances) | set(other.appliances))
+        elif type(other) is Personnel:
+            if other.id[:8] not in self._personnelID:
+                self._personnel.append(other)
+        elif type(other) is Vehicle:
+            if other.callsign not in self._callsigns:
+                self._appliances.append(other)
+        else:
+            raise TypeError(f"{type(other)} cannot be operated on <Rota>")
+
+    @safeLoad
+    def __sub__(self, other):
+        if type(other) is Rota:
+            self._personnel = list(set(self.personnel) - set(other.personnel))
+            self._appliances = list(set(self.appliances) - set(other.appliances))
+        elif type(other) is Personnel:
+            if other.id[:8] in self._personnelID:
+                self._personnel.pop(list(self._personnelID).index(other.id[:8]))
+        elif type(other) is Appliance:
+            if other.callsign in self._callsigns:
+                self._appliances.pop(list(self._callsigns).index(other.callsign))
+        else:
+            raise TypeError(f"{type(other)} cannot be operated on <Rota>")
+
+    def add(self, other):
+        if type(other) is not list:
+            other = [other]
+        [self + i for i in other]
+
+    def sub(self, other):
+        if type(other) is not list:
+            other = [other]
+        [self - i for i in other]
+
+    def __len__(self):
+        return len(self.personnel)
+
+    def __repr__(self):
+        return f"Rota {self.rota}"
+
+    def __str__(self):
+        return f"ROTA       : {self.rota}\n" \
+               f"PERSONNEL  : {len(self)}\n" \
+               f"APPLIANCES : {self.active} appliances on-run"
+
+    def addRole(self, person, constraint=None, rule=None):
+        if type(person) is Personnel and person.id[:8] in self._personnelID:
+            person.constraint(constraint, rule)
+        elif type(person) is str and person in self._personnelID:
+            person = self._personnelID[person]
+            person.constraint(constraint, rule)
+        else:
+            print(f"{person} does not exist")
+
+    def activate(self, vehicle, active=True):
+        if type(vehicle) is Vehicle:
+            self.add(vehicle)
+            vehicle.active = active
+        elif type(vehicle) is str:
+            if vehicle in self._callsigns:
+                vehicle = self._callsigns[vehicle]
+                vehicle.active = active
+            else:
+                print(f"{vehicle} is not a <vehicle>")
+        else:
+            print(f"{vehicle} is not a <vehicle>")
+
+    def deactivate(self, vehicle):
+        self.activate(vehicle, False)
+
+    def offRunStation(self):
+        [self.deactivate(i) for i in self._callsigns]
+
+    def _save(self, fileName=None, rootDir=None):
+        if fileName:
+            self._fileName = fileName
+        file = os.path.splitext(self._fileName)[0] + ".data"
+        if rootDir:
+            self._rootDir = rootDir
+        with open(os.path.abspath(os.path.expanduser(os.path.join(self._rootDir, file))), 'wb') as f:
+            pickle.dump(self(), f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def _load(self):
+        file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + ".data"
+        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
+            print("File does not exist. Creating new rota.")
+            self._save()  # Creates data file
+        else:
+            with open(os.path.abspath(os.path.expanduser(file)), 'rb') as f:
+                data = pickle.load(f)
+            self.rota = data['rota']
+            self._personnel = data['personnel']
+            self._appliances = data['appliances']
