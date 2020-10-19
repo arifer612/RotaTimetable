@@ -228,19 +228,18 @@ def safeLoad(function):
     return runFunction
 
 
-class Rota(object):
+class Rota(object):  # Data object of personnel in rota and the turnout history
     def __init__(self, fileName=None, rootDir=".", rota: int = None):
         if not (rota or fileName):
             sys.exit('Provide rota number to create a new rota or log file directory to load data')
-        else:
-            self.rota, self._fileName, self._rootDir = rota, fileName, rootDir
-            self._personnel, self._appliances = [], []
-            if not self._fileName:
-                if not rota:
-                    raise NameError("Declare rota number to create a new rota")
-                self._fileName = f"Rota {self.rota}.data"
-                self._rootDir = rootDir
-            self._load()
+        self.rota, self._fileName, self._rootDir = rota, fileName, rootDir
+        self._personnel = []
+        if not self._fileName:
+            if not rota:
+                raise NameError("Declare rota number to create a new rota")
+            self._fileName = f"Rota {self.rota}.data"
+            self._rootDir = rootDir
+        self._load()
 
     @property
     def personnel(self):
@@ -250,18 +249,6 @@ class Rota(object):
     def _personnelID(self):
         return {i.id: i for i in self._personnel}
 
-    @property
-    def appliances(self):
-        return self._appliances
-
-    @property
-    def _callsigns(self):
-        return {i.callsign: i for i in self._appliances}
-
-    @property
-    def active(self):
-        return [i for i in self.appliances if i.active]
-
     def __call__(self, arg=None):
         if arg:
             if isinstance(arg, (Personnel, Vehicle)):
@@ -269,28 +256,21 @@ class Rota(object):
             elif isinstance(arg, str):
                 if arg in self._personnelID:
                     return self._personnelID[arg]
-                elif arg in self._callsigns:
-                    return self._callsigns[arg]
                 else:
                     print(f"{arg} does not exist in this rota")
         else:
             return {
                 'rota': self.rota,
-                'personnel': [i() for i in self.personnel],
-                'appliances': [i() for i in self.appliances]
+                'personnel': [i() for i in self.personnel]
             }
 
     @safeLoad
     def __add__(self, other):
         if isinstance(other, Rota):
             self._personnel = list(set(self.personnel) | set(other.personnel))
-            self._appliances = list(set(self.appliances) | set(other.appliances))
         elif isinstance(other, Personnel):
             if other.id not in self._personnelID:
                 self._personnel.append(other)
-        elif isinstance(other, Vehicle):
-            if other.callsign not in self._callsigns:
-                self._appliances.append(other)
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
@@ -298,22 +278,18 @@ class Rota(object):
     def __sub__(self, other):
         if isinstance(other, Rota):
             self._personnel = list(set(self.personnel) - set(other.personnel))
-            self._appliances = list(set(self.appliances) - set(other.appliances))
         elif isinstance(other, Personnel):
             if other.id in self._personnelID:
                 self._personnel.pop(list(self._personnelID).index(other.id))
-        elif isinstance(other, Vehicle):
-            if other.callsign in self._callsigns:
-                self._appliances.pop(list(self._callsigns).index(other.callsign))
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
-    def add(self, other):
+    def add(self, other: Personnel):
         if not isinstance(other, list):
             other = [other]
         [self + i for i in other]
 
-    def sub(self, other):
+    def sub(self, other: Personnel):
         if not isinstance(other, list):
             other = [other]
         [self - i for i in other]
@@ -326,8 +302,7 @@ class Rota(object):
 
     def __str__(self):
         return f"ROTA       : {self.rota}\n" \
-               f"PERSONNEL  : {len(self)}\n" \
-               f"APPLIANCES : {self.active} appliances on-run"
+               f"PERSONNEL  : {len(self)}\n"
 
     def addRole(self, person, constraint=None, rule=None):
         if isinstance(person, Personnel) and person.id in self._personnelID:
