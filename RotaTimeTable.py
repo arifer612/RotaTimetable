@@ -228,7 +228,7 @@ def safeLoad(function):
     return runFunction
 
 
-class Rota(object):  # Data object of personnel in rota and the turnout history
+class Rota(object):
     def __init__(self, fileName=None, rootDir=".", rota: int = None):
         if not (rota or fileName):
             sys.exit('Provide rota number to create a new rota or log file directory to load data')
@@ -313,25 +313,6 @@ class Rota(object):  # Data object of personnel in rota and the turnout history
         else:
             print(f"{person} does not exist")
 
-    def activate(self, vehicle, active=True):
-        if isinstance(vehicle, Vehicle):
-            self.add(vehicle)
-            vehicle.active = active
-        elif isinstance(vehicle, str):
-            if vehicle in self._callsigns:
-                vehicle = self._callsigns[vehicle]
-                vehicle.active = active
-            else:
-                print(f"{vehicle} is not a <vehicle>")
-        else:
-            print(f"{vehicle} is not a <vehicle>")
-
-    def deactivate(self, vehicle):
-        self.activate(vehicle, False)
-
-    def offRunStation(self):
-        [self.deactivate(i) for i in self._callsigns]
-
     def _save(self, fileName=None, rootDir=None):
         if fileName:
             self._fileName = fileName
@@ -352,3 +333,163 @@ class Rota(object):  # Data object of personnel in rota and the turnout history
             self.rota = data['rota']
             self._personnel = data['personnel']
             self._appliances = data['appliances']
+
+
+class Station(object):
+    def __init__(self, name, fileName=None, rootDir='.'):
+        self.name, self._fileName, self._rootDir = name, fileName, rootDir
+        self._roles = self._appliances = self._vehicles = self._rotas = {}
+        if not self._fileName:
+            self._fileName = self.name
+
+    @property
+    def roles(self):
+        return self._roles
+
+    @property
+    def appliances(self):
+        return self._appliances
+
+    @property
+    def vehicles(self):
+        return self._vehicles
+
+    @property
+    def rotas(self):
+        return self._rotas
+
+    @property
+    def active(self):
+        return [i for i in self.vehicles if i.active]
+
+    @property
+    def data(self):
+        return {**self.roles, **self.appliances, **self.vehicles, **self.rotas}
+
+    def __call__(self, *args, **kwargs):
+        if args:
+            return self.data[args[0]]
+        else:
+            return self.data
+
+    def checkExistence(self, data, dataName, dataDict):
+        self._load()
+        if dataName in self.data and dataName not in dataDict:
+            raise TypeError(f"{dataName} has already been declared as a <{self.data[dataName]}>")
+
+        if dataName not in dataDict:
+            dataDict.update({dataName: data})
+            self._save()
+            return data
+        else:
+            return dataDict[dataName]
+
+    def role(self, *args, **kwargs) -> Role:
+        if args[0] in self.roles:
+            return self.roles[args[0]]
+
+        if 'role' in kwargs:
+            role = kwargs['role']
+        else:
+            role = Role(*args, **kwargs)
+
+        return self.checkExistence(role, role.role, self.roles)
+
+    def appliance(self, *args, **kwargs) -> Appliance:
+        if args[0] in self.appliances:
+            return self.appliances[args[0]]
+
+        if 'appliance' in kwargs:
+            app = kwargs['appliance']
+        else:
+            app = Appliance(*args, **kwargs)
+
+        return self.checkExistence(app, app.appliance, self.appliances)
+
+    def vehicle(self, *args, **kwargs) -> Vehicle:
+        if args[0] in self.vehicles:
+            return self.vehicles[args[0]]
+
+        if 'vehicle' in kwargs:
+            veh = kwargs['vehicle']
+        else:
+            veh = Vehicle(*args, **kwargs)
+
+        return self.checkExistence(veh, veh.callsign, self.vehicles)
+
+    def rota(self, *args, **kwargs):
+        if args[0] in self.rotas:
+            return self.rotas[args[0]]
+
+        if 'rota' in kwargs:
+            rota = kwargs['rota']
+        else:
+            rota = Rota(*args, **kwargs)
+
+        return self.checkExistence(rota, rota.rota, self.rotas)
+
+    def personnel(self, rota, name, role: Role) -> Personnel:
+        if not isinstance(role, Role):
+            if role in self.roles:
+                role = self.roles[role]
+            else:
+                raise TypeError(f"{role} has to be a <Role>")
+
+        person = Personnel(name, role)
+        self(rota).add(person)
+        return person
+
+    def __add__(self, other):
+        if isinstance(other, Rota):
+            self.rota(rota=other)
+        elif isinstance(other, Role):
+            self.role(role=other)
+        elif isinstance(other, Appliance):
+            self.appliance(appliance=other)
+        elif isinstance(other, Vehicle):
+            self.vehicle(vehicle=other)
+        elif isinstance(other, list):
+            [self + i for i in other]
+        else:
+            raise TypeError(f"{type(other)} cannot be operated on <Station>")
+
+    def add(self, other):
+        self + other
+
+    def activate(self, vehicle, active=True):
+        if isinstance(vehicle, Vehicle):
+            self.add(vehicle)
+            vehicle.active = active
+        elif isinstance(vehicle, str):
+            if vehicle in self.vehicles:
+                self.vehicles[vehicle].active = active
+            else:
+                raise NameError(f"{vehicle} is not a <Vehicle>")
+        else:
+            raise NameError(f"{vehicle} is not a <Vehicle>")
+
+    def deactivate(self, vehicle):
+        self.activate(vehicle, False)
+
+    def offRunStation(self):
+        [self.deactivate(i) for i in self.vehicles]
+
+    def _save(self, fileName=None, rootDir=None):
+        if fileName:
+            self._fileName = fileName
+        file = os.path.splitext(self._fileName)[0] + ".stn"
+        if rootDir:
+            self._rootDir = rootDir
+        with open(os.path.abspath(os.path.expanduser(os.path.join(self._rootDir, file))), 'wb') as f:
+            data = (self.roles, self.appliances, self.vehicles, self.rotas)
+            pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def _load(self):
+        file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + ".stn"
+        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
+            print("File does not exist. Creating new rota.")
+            self._save()  # Creates data file
+        else:
+            with open(os.path.abspath(os.path.expanduser(file)), 'rb') as f:
+                data = pickle.load(f)
+            self._roles, self._appliances, self._rotas = data
