@@ -17,31 +17,33 @@ from typing import Union, Dict, Tuple, NewType
 class Role(object):
     """
     Creates an object that defines the Role of a Personnel.
-    ...
-        Attributes:
-            role (str): Name of the Role.
-            constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
-                                current Role has access to. The constraints are retrieved
-                                from 2 sources -- itself and its inherited role. The
-                                inherited constraints do not take precedence over its
-                                declared constraints.
-    ...
+
+    Attributes:
+        role (str): Name of the Role.
+        constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
+                            current Role has access to. The constraints are retrieved
+                            from 2 sources -- itself and its inherited role. The
+                            inherited constraints do not take precedence over its
+                            declared constraints.
     """
     def __init__(self, name,
                  constraint: Union["Vehicle", dict, list] = None, rule: bool = False,
                  inherit: "Role" = None):
 
         """
-        Arguments:
-            name (str): Name of the Role
+        Args:
+            :param name (str): Name of the Role
             constraint (dict, list, Vehicle): Constraints of this Role.
+
                 (dict): Adds the whole dictionary of constraints as this Role's constraints.
+
                 (list): Adds the list of Vehicles to this Role's constraints.
+
                 (Vehicle): Adds the Vehicle to this Role's constraints.
             rule (bool): Rule for the constraint(s) if constraint is a list or Vehicle.
             inherit (Role): Inherits the constraints of this Role.
 
-        Raise:
+        Raises:
             TypeError: If arguments are of the incorrect type.
         """
         self.role, self._constraints, self._inheritance = name, {}, inherit
@@ -71,14 +73,15 @@ class Role(object):
     def constraint(self, constraint: Union["Vehicle", dict, list], rule: bool = False):
         """
         Declares a new constraint for this Role.
-        ...
-            Arguments:
-               constraint (dict, list, Vehicle): Constraints of this Role.
-                   (dict): Adds the whole dictionary of constraints as this Role's constraints.
-                   (list): Adds the list of Vehicles to this Role's constraints.
-                   (Vehicle): Adds the Vehicle to this Role's constraints.
-               rule (bool): Rule for the constraint(s) if constraint is a list or Vehicle.
-        ...
+        Args:
+           constraint (dict, list, Vehicle): Constraints of this Role.
+
+               (dict): Adds the whole dictionary of constraints as this Role's constraints.
+
+               (list): Adds the list of Vehicles to this Role's constraints.
+
+               (Vehicle): Adds the Vehicle to this Role's constraints.
+           rule (bool): Rule for the constraint(s) if constraint is a list or Vehicle.
         """
         if isinstance(constraint, dict):
             err = erri = errj = []
@@ -140,22 +143,21 @@ class Role(object):
 
 class Personnel(Role):
     """
-    Creates a Personnel using an existing Role
-    ...
-        Attributes:
-            name (str): Name of the Personnel.
-            id (str): 8-digits unique hash of the Personnel.
-            role (str): Name of the Personnel's Role.
-            constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
-                                current Role has access to. The constraints are retrieved
-                                from 2 sources -- itself and its inherited role. The
-                                inherited constraints do not take preceedence over its
-                                declared constraints.
-    ...
+    Creates a Personnel using an existing Role.
+
+    Attributes:
+        name (str): Name of the Personnel.
+        id (str): 8-digits unique hash of the Personnel.
+        role (str): Name of the Personnel's Role.
+        constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
+                            current Role has access to. The constraints are retrieved
+                            from 2 sources -- itself and its inherited role. The
+                            inherited constraints do not take preceedence over its
+                            declared constraints.
     """
     def __init__(self, name, role: Role):
         """
-        Arguments:
+        Args:
             name (str): Name of the Personnel.
             role (Role): Inherits the properties and attributes of the Role.
         """
@@ -206,22 +208,21 @@ class Personnel(Role):
 class Appliance(object):
     """
     Creates an object that defines the Appliance of a Vehicle.
-    ...
-        Attributes:
-            appliance (str): Name of the Appliance.
-            crew (dict): Dictionary of Roles and their maximum number in the Appliance.
-            limits (list): Minimum and maximum number of Personnel in the Appliance.
-    ...
+
+    Attributes:
+        appliance (str): Name of the Appliance.
+        crew (dict): Dictionary of Roles and their maximum number in the Appliance.
+        limits (list): Minimum and maximum number of Personnel in the Appliance.
     """
     def __init__(self, name, crew: dict, minimum: int = 1, maximum: int = 1):
         """
-        Arguments:
+        Args:
             name (str): Name of the Appliance.
             crew (dict): Crew allowed on the Appliance.
             minimum (int): Minimum number of Personnel required on the Appliance.
             maximum (int): Maximum number of Personnel allowed on the Appliance.
 
-        Raise:
+        Raises:
             TypeError: Arguments are of the incorrect types.
             ValueError: Crew not added or maximum is more than minimum.
         """
@@ -279,19 +280,20 @@ class Appliance(object):
     def change(self, role: Union[Role, dict], value: int = None, minimum: int = None, maximum: int = None):
         """
         Changes the crew information of the Appliance.
-        ...
-            Arguments:
-                role (Role, dict): Roles to change
-                    (Role): Changes the number of 'Role' in the Appliance's crew to 'value'.
-                    (dict): Updates the crew with the items of the dictionary.
-                value (int): Updates 'role' in crew to 'value'
-                minimum (int): Updates minimum number of crew required on the Appliance.
-                maximum (int): Updates maximum number of crew allowed on the Appliance.
 
-            Raise:
-                TypeError: Arguments are of the incorrect types.
-                Value Error: 
-        ...
+        Args:
+            role (Role, dict): Roles to change
+
+                (Role): Changes the number of 'Role' in the Appliance's crew to 'value'.  
+
+                (dict): Updates the crew with the items of the dictionary.  
+            value (int): Updates 'role' in crew to 'value'
+            minimum (int): Updates minimum number of crew required on the Appliance.
+            maximum (int): Updates maximum number of crew allowed on the Appliance.
+
+        Raises:
+            TypeError: Arguments are of the incorrect types.
+            Value Error: New crew exceeds maximum number of Personnel allowed in the Appliance.
         """
         if minimum:
             if not isinstance(minimum, int):
