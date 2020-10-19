@@ -11,19 +11,20 @@ import pickle
 import os
 import sys
 import hashlib
+from typing import Union
 
 
 class Role(object):
-    def __init__(self, name, constraint=None, rule=False, inherit=None):
-        self.role, self._constraints = name, {}
+    def __init__(self, name,
+                 constraint: Union[dict, list, str] = None, rule: bool = False,
+                 inherit: "Role" = None):
+        self.role, self._constraints, self._inheritance = name, {}, inherit
 
         if type(rule) is not bool:
             raise TypeError("Only boolean rules are allowed")
 
         if inherit:
-            if isinstance(inherit, Role):
-                self._constraints = inherit.constraints
-            else:
+            if not isinstance(inherit, Role):
                 raise TypeError("Only <Role> can be inherited")
 
         if constraint:
@@ -41,7 +42,10 @@ class Role(object):
 
     @property
     def constraints(self):
-        return self._constraints
+        if self._inheritance:
+            return {**self._inheritance.constraints, **self._constraints}
+        else:
+            return self._constraints
 
     def constraint(self, constraint=None, rule=False):
         if constraint:
