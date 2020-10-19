@@ -20,7 +20,7 @@ class Role(object):
                  inherit: "Role" = None):
         self.role, self._constraints, self._inheritance = name, {}, inherit
 
-        if type(rule) is not bool:
+        if not isinstance(rule, bool):
             raise TypeError("Only boolean rules are allowed")
 
         if inherit:
@@ -28,20 +28,20 @@ class Role(object):
                 raise TypeError("Only <Role> can be inherited")
 
         if constraint:
-            if type(constraint) is dict:
+            if isinstance(constraint, dict):
                 for i, j in constraint:
-                    if type(i) is not "Vehicle":
+                    if not isinstance(i, Vehicle):
                         raise TypeError("Only <Vehicle> can be added as constraints")
-                    if type(j) is not bool:
+                    if not isinstance(j, bool):
                         raise TypeError("Only <boolean> rules are allowed")
                     self._constraints.update(constraint)
-            elif type(constraint) is list:
+            elif isinstance(constraint, list):
                 self._constraints.update({i: rule for i in constraint})
             else:
                 self._constraints.update({constraint: rule})
 
     @property
-    def constraints(self):
+    def constraints(self) -> dict:
         if self._inheritance:
             return {**self._inheritance.constraints, **self._constraints}
         else:
@@ -52,8 +52,7 @@ class Role(object):
             self._constraints.update({constraint: rule})
 
     def __add__(self, other):
-        if type(other) is not Role:
-            print(type(other))
+        if not isinstance(other, Role):
             raise TypeError("Only <Role> can be added to <Role>")
         else:
             if other.constraints:
@@ -69,10 +68,15 @@ class Role(object):
     def __str__(self):
         return f"{self.constraints if self.constraints else 'NONE'}"
 
+    def __call__(self):
+        return self.role, self.constraints, self._inheritance.role
+
 
 class Personnel(Role):
-    def __init__(self, name, role=None):
+    def __init__(self, name, role: Role):
         self._name = name
+        if not isinstance(role, Role):
+            raise TypeError("Only <Role> can be used to create personnel")
         super().__init__(role)
 
     @property
@@ -84,8 +88,12 @@ class Personnel(Role):
         self._name = newName
 
     @property
-    def id(self):
+    def __id(self):
         return hashlib.sha1(f"{self.name} @ {self.role}".encode()).hexdigest()
+
+    @property
+    def id(self):
+        return self.__id[10:17]
 
     @property
     def constraints(self):
@@ -106,15 +114,14 @@ class Personnel(Role):
 
 
 class Appliance(object):
-    def __init__(self, name, crew, minimum=1, maximum=1):
+    def __init__(self, name, crew: dict, minimum: int = 1, maximum: int = 1):
         if not crew:
             raise ValueError(f"Assign minimum crew of {name}")
-        elif type(crew) is not dict:
-            raise TypeError("Crew has to be represented as a dictionary")
+        elif not isinstance(crew, dict):
+            raise TypeError("Crew has to be represented as a <dict>")
         if maximum < minimum:
             raise ValueError(f"Maximum cannot be less than the minimum")
         maximum = maximum if maximum >= sum(crew.values()) else sum(crew.values())
-
         self._appliance, self._crew, self.limits = name, crew, [minimum, maximum]
 
     @property
@@ -133,13 +140,18 @@ class Appliance(object):
     def __repr__(self):
         return f"{self.crew}"
 
-    def change(self, role, value=None, maximum=None):
+    def __call__(self):
+        return (self.appliance, self.crew, *self.limits)
+
+    def change(self, role: Union[Role, dict], value: int = None, maximum: int = None):
         self.limits[1] = maximum
         crew = self.crew
-        if type(role) is dict:
-            for i, j in role.items():
-                if type(j) is not int:
-                    raise TypeError("Only integer values are allowed")
+        if isinstance(role, dict):
+            for i, j in role.items():  # Check for type errors before proceeding
+                if not isinstance(i, Role):
+                    raise TypeError(f"{{{i}: {j}}}: Only <Role> can be added to crew")
+                if not isinstance(j, int):
+                    raise TypeError(f"{{{i}: {j}}}: Only <integer> values are allowed")
             crew.update(role)
             if sum(crew.values()) > self.limits[1]:
                 raise ValueError("Total crew exceeds maximum of the appliance")
@@ -147,8 +159,8 @@ class Appliance(object):
                 self._crew.update(role)
         elif not value:
             raise AttributeError(f"Number of {role} has to be declared")
-        elif type(value) is not int:
-            raise TypeError("Only integer values are allowed")
+        elif not isinstance(value, int):
+            raise TypeError("Only <integer> values are allowed")
         else:
             crew.update({role: value})
             if sum(crew.values()) > self.limits[1]:
@@ -159,8 +171,8 @@ class Appliance(object):
 
 class Vehicle(Appliance):
     def __init__(self, callsign, appliance: Appliance, plateNumber, active: bool = True):
-        if type(appliance) is not Appliance:
-            raise TypeError(f"{appliance} is not an Appliance. Create the object first")
+        if not isinstance(appliance, Appliance):
+            raise TypeError(f"{appliance} is not an Appliance. Create the Appliance first")
         self._callsign, self._plateNumber, self._active = callsign, plateNumber, active
         super().__init__(appliance.appliance, appliance.crew, *appliance.limits)
 
@@ -176,19 +188,19 @@ class Vehicle(Appliance):
     def plate(self):
         return self._plateNumber
 
+    @plate.setter
+    def plate(self, newPlate):
+        self._plateNumber = newPlate
+
     @property
     def active(self):
         return self._active
 
     @active.setter
     def active(self, val: bool):
-        if type(val) is not bool:
-            raise TypeError("Only boolean values are allowed")
+        if not isinstance(val, bool):
+            raise TypeError("Only <boolean> values are allowed")
         self._active = val
-
-    @plate.setter
-    def plate(self, newPlate):
-        self._plateNumber = newPlate
 
     def onRun(self):
         self.active = True
@@ -201,7 +213,10 @@ class Vehicle(Appliance):
 
     def __call__(self):
         return {
-            'callsign': self.callsign
+            'callsign': self.callsign,
+            'appliance': self.appliance,
+            'crew': self.crew,
+            'limits': self.limits
         }
 
 
@@ -210,7 +225,6 @@ def safeLoad(function):
         self._load()
         function(self, *args, **kwargs)
         self._save()
-
     return runFunction
 
 
@@ -234,7 +248,7 @@ class Rota(object):
 
     @property
     def _personnelID(self):
-        return {i.id[:8]: i for i in self._personnel}
+        return {i.id: i for i in self._personnel}
 
     @property
     def appliances(self):
@@ -250,9 +264,9 @@ class Rota(object):
 
     def __call__(self, arg=None):
         if arg:
-            if type(arg) is Personnel or Vehicle:
+            if isinstance(arg, (Personnel, Vehicle)):
                 return arg
-            elif type(arg) is str:
+            elif isinstance(arg, str):
                 if arg in self._personnelID:
                     return self._personnelID[arg]
                 elif arg in self._callsigns:
@@ -262,19 +276,19 @@ class Rota(object):
         else:
             return {
                 'rota': self.rota,
-                'personnel': self.personnel,
-                'appliances': self.appliances
+                'personnel': [i() for i in self.personnel],
+                'appliances': [i() for i in self.appliances]
             }
 
     @safeLoad
     def __add__(self, other):
-        if type(other) is Rota:
+        if isinstance(other, Rota):
             self._personnel = list(set(self.personnel) | set(other.personnel))
             self._appliances = list(set(self.appliances) | set(other.appliances))
-        elif type(other) is Personnel:
-            if other.id[:8] not in self._personnelID:
+        elif isinstance(other, Personnel):
+            if other.id not in self._personnelID:
                 self._personnel.append(other)
-        elif type(other) is Vehicle:
+        elif isinstance(other, Vehicle):
             if other.callsign not in self._callsigns:
                 self._appliances.append(other)
         else:
@@ -282,25 +296,25 @@ class Rota(object):
 
     @safeLoad
     def __sub__(self, other):
-        if type(other) is Rota:
+        if isinstance(other, Rota):
             self._personnel = list(set(self.personnel) - set(other.personnel))
             self._appliances = list(set(self.appliances) - set(other.appliances))
-        elif type(other) is Personnel:
-            if other.id[:8] in self._personnelID:
-                self._personnel.pop(list(self._personnelID).index(other.id[:8]))
-        elif type(other) is Appliance:
+        elif isinstance(other, Personnel):
+            if other.id in self._personnelID:
+                self._personnel.pop(list(self._personnelID).index(other.id))
+        elif isinstance(other, Vehicle):
             if other.callsign in self._callsigns:
                 self._appliances.pop(list(self._callsigns).index(other.callsign))
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
     def add(self, other):
-        if type(other) is not list:
+        if not isinstance(other, list):
             other = [other]
         [self + i for i in other]
 
     def sub(self, other):
-        if type(other) is not list:
+        if not isinstance(other, list):
             other = [other]
         [self - i for i in other]
 
@@ -316,19 +330,19 @@ class Rota(object):
                f"APPLIANCES : {self.active} appliances on-run"
 
     def addRole(self, person, constraint=None, rule=None):
-        if type(person) is Personnel and person.id[:8] in self._personnelID:
+        if isinstance(person, Personnel) and person.id in self._personnelID:
             person.constraint(constraint, rule)
-        elif type(person) is str and person in self._personnelID:
+        elif isinstance(person, str) and person in self._personnelID:
             person = self._personnelID[person]
             person.constraint(constraint, rule)
         else:
             print(f"{person} does not exist")
 
     def activate(self, vehicle, active=True):
-        if type(vehicle) is Vehicle:
+        if isinstance(vehicle, Vehicle):
             self.add(vehicle)
             vehicle.active = active
-        elif type(vehicle) is str:
+        elif isinstance(vehicle, str):
             if vehicle in self._callsigns:
                 vehicle = self._callsigns[vehicle]
                 vehicle.active = active
