@@ -1,0 +1,3533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.1" />
+<title>rtt.library API documentation</title>
+<meta name="description" content="Created on Fri Sep 18 23:38:27 2020 …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>rtt.library</code></h1>
+</header>
+<section id="section-intro">
+<p>Created on Fri Sep 18 23:38:27 2020</p>
+<p>Package to manage turnouts every shift</p>
+<p>@author: Arif Er</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># -*- coding: utf-8 -*-
+&#34;&#34;&#34;
+Created on Fri Sep 18 23:38:27 2020
+
+Package to manage turnouts every shift
+
+@author: Arif Er
+&#34;&#34;&#34;
+
+import pickle
+import os
+import sys
+import hashlib
+from typing import Union, List, Dict, Tuple, Type, Callable, Any
+
+
+class Role(object):
+    &#34;&#34;&#34;
+    Creates an object that defines the Role of a Personnel.
+
+    Attributes:
+        role (str):         Name of the Role.
+        constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
+                            current Role has access to. The constraints are retrieved
+                            from 2 sources -- itself and its inherited role. The
+                            inherited constraints do not take precedence over its
+                            declared constraints.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str,
+                 constraint: Union[&#34;Vehicle&#34;, dict, list] = None, rule: bool = False,
+                 inherit: &#34;Role&#34; = None):
+
+        &#34;&#34;&#34;
+        Args:
+            name (str):                       Name of the Role
+            constraint (Vehicle, dict, list): Constraints of this Role.
+
+                (Vehicle): Adds the Vehicle to this Role&#39;s constraints.
+
+                (dict):    Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+                (list):    Adds the list of Vehicles to this Role&#39;s constraints.
+
+            rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+            inherit (Role):                   Inherits the constraints of this Role.
+
+        Raises:
+            TypeError: If arguments are of the incorrect type.
+        &#34;&#34;&#34;
+        self.role, self._constraints, self._inheritance = name, {}, inherit
+
+        if not isinstance(rule, bool):
+            raise TypeError(&#34;Only boolean rules are allowed&#34;)
+
+        if inherit:
+            if not isinstance(inherit, Role):
+                raise TypeError(&#34;Only &lt;Role&gt; can be inherited&#34;)
+
+        if constraint:
+            self.constraint(constraint)
+
+    @property
+    def constraints(self) -&gt; Dict[&#34;Vehicle&#34;, bool]:
+        &#34;&#34;&#34;
+        Updates the Role&#39;s constraints if the inherited Role has a new constraint unless
+        declared beforehand. The declaration is usually made when creating the instance
+        and may be done post-creation through the constraint() method.
+        &#34;&#34;&#34;
+        if self._inheritance:
+            return {**self._inheritance.constraints, **self._constraints}
+        else:
+            return self._constraints
+
+    def constraint(self, constraint: Union[&#34;Vehicle&#34;, dict, list], rule: bool = False) -&gt; None:
+        &#34;&#34;&#34;
+        Declares a new constraint for this Role.
+
+        Args:
+           constraint (dict, list, Vehicle): Constraints of this Role.
+
+               (dict):    Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+               (list):    Adds the list of Vehicles to this Role&#39;s constraints.
+
+               (Vehicle): Adds the Vehicle to this Role&#39;s constraints.
+
+           rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+
+        Raises:
+            TypeError: If constraints or rules are of the incorrect types.
+        &#34;&#34;&#34;
+        if isinstance(constraint, dict):
+            err = erri = errj = []
+            for i, j in constraint.items():
+                if not isinstance(i, Vehicle):
+                    erri.append(i)
+                if not isinstance(j, bool):
+                    errj.append(j)
+                if erri:
+                    err.append(f&#34;{&#39;, &#39;.join(erri)}: Only &lt;Vehicle&gt; can be added as constraints&#34;)
+                if errj:
+                    err.append(f&#34;{&#39;, &#39;.join(errj)}: Only &lt;boolean&gt; rules are allowed&#34;)
+                if err:
+                    raise TypeError(f&#34;{&#39;&amp; &#39;.join(err)}&#34;)
+
+            self._constraints.update(constraint)
+        elif isinstance(constraint, Vehicle):
+            if not isinstance(rule, bool):
+                raise TypeError(&#34;Only &lt;boolean&gt; rules are allowed&#34;)
+            self._constraints.update({constraint: rule})
+        elif isinstance(constraint, list):
+            errs = []
+            for i in constraint:
+                if not isinstance(i, Vehicle):
+                    errs.append(i)
+            if errs:
+                raise TypeError(f&#34;{&#39;, &#39;.join(errs)}: Only &lt;Vehicle&gt; can be added as constraints&#34;)
+
+            [self._constraints.update({i: rule}) for i in constraint]
+        else:
+            raise TypeError(&#34;Only &lt;Vehicle&gt; can be added as constraints&#34;)
+
+    def __add__(self, other: &#34;Role&#34;) -&gt; None:
+        &#34;&#34;&#34;
+        Defines a one-way operation to add the constraint of an existing Role to the current Role.
+        &#34;&#34;&#34;
+        if not isinstance(other, Role):
+            raise TypeError(&#34;Only &lt;Role&gt; can be added to &lt;Role&gt;&#34;)
+        else:
+            if other.constraints:
+                for constraint, rule in other.constraints.items():
+                    if constraint not in self.constraints:
+                        self.constraint(constraint, rule)
+            else:
+                pass
+
+    def __repr__(self):
+        return self.role
+
+    def __str__(self):
+        return f&#34;{self.constraints if self.constraints else &#39;NONE&#39;}&#34;
+
+    def __call__(self) -&gt; Tuple[str, Dict[&#34;Vehicle&#34;, bool], str]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return self.role, self.constraints, self._inheritance.role
+
+
+class Personnel(Role):
+    &#34;&#34;&#34;
+    Creates a Personnel using an existing Role.
+
+    Attributes:
+        name (str):         Name of the Personnel.
+        id (str):           8-digits unique hash of the Personnel.
+        role (str):         Name of the Personnel&#39;s Role.
+        constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
+                            current Role has access to. The constraints are retrieved
+                            from 2 sources -- itself and its inherited role. The
+                            inherited constraints do not take precedence over its
+                            declared constraints.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str, role: Role):
+        &#34;&#34;&#34;
+        Args:
+            name (str):  Name of the Personnel.
+            role (Role): Inherits the properties and attributes of the Role.
+        &#34;&#34;&#34;
+        self._name = name
+        if not isinstance(role, Role):
+            raise TypeError(&#34;Only &lt;Role&gt; can be used to create personnel&#34;)
+        super().__init__(role.role, inherit=role)
+
+    @property
+    def name(self) -&gt; str:
+        return self._name
+
+    @name.setter
+    def name(self, newName) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the name of the Personnel.
+        &#34;&#34;&#34;
+        self._name = newName
+
+    @property
+    def __id(self) -&gt; str:
+        return hashlib.sha1(f&#34;{self.name} @ {self.role}&#34;.encode()).hexdigest()
+
+    @property
+    def id(self) -&gt; str:
+        &#34;&#34;&#34;
+        8 digits slice of the unique hash of the Personnel.
+        &#34;&#34;&#34;
+        return self.__id[10:17]
+
+    def __repr__(self):
+        return self.id
+
+    def __str__(self):
+        return self.name
+
+    def __call__(self) -&gt; Dict[str, Union[str, Dict[&#34;Vehicle&#34;, bool]]]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return {
+            &#39;name&#39;: self.name,
+            &#39;role&#39;: self.role,
+            &#39;constraints&#39;: self.constraints
+        }
+
+
+class Appliance(object):
+    &#34;&#34;&#34;
+    Creates an object that defines the Appliance of a Vehicle.
+
+    Attributes:
+        appliance (str): Name of the Appliance.
+        crew (dict):     Dictionary of Roles and their maximum number in the Appliance.
+        limits (list):   Minimum and maximum number of Personnel in the Appliance.
+    &#34;&#34;&#34;
+
+    def __init__(self, name, crew: Dict[Role, int], minimum: int = 1, maximum: int = 1):
+        &#34;&#34;&#34;
+        Args:
+            name (str):    Name of the Appliance.
+            crew (dict):   Crew allowed on the Appliance.
+            minimum (int): Minimum number of Personnel required on the Appliance.
+            maximum (int): Maximum number of Personnel allowed on the Appliance.
+
+        Raises:
+            TypeError:  Arguments are of the incorrect types.
+            ValueError: Crew not added or maximum is more than minimum.
+        &#34;&#34;&#34;
+        if not crew:
+            raise ValueError(f&#34;Assign minimum crew of {name}&#34;)
+        elif not isinstance(crew, dict):
+            raise TypeError(&#34;Crew has to be represented as a &lt;dict&gt;&#34;)
+        if not (isinstance(minimum, int) and isinstance(maximum, int)):
+            raise TypeError(&#34;Minimum and Maximum have to be &lt;integer&gt;&#34;)
+        if maximum &lt; minimum:
+            raise ValueError(f&#34;Maximum cannot be less than the minimum&#34;)
+        maximum = maximum if maximum &gt;= sum(crew.values()) else sum(crew.values())
+        self._appliance, self._crew, self._limits = name, crew, [minimum, maximum]
+
+    @property
+    def limits(self) -&gt; List[int]:
+        return self._limits
+
+    @limits.setter
+    def limits(self, newLimits) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the crew limits on the Appliance.
+        &#34;&#34;&#34;
+        if not isinstance(newLimits, (list, tuple)):
+            raise TypeError(f&#34;Limits have to be have to be represented as a list or tuple&#34;)
+        if len(newLimits) != 2:
+            raise ValueError(&#34;Incorrect number of limits&#34;)
+        self._limits = list(newLimits)
+
+    @property
+    def appliance(self) -&gt; str:
+        return self._appliance
+
+    @appliance.setter
+    def appliance(self, newName) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the name of the Appliance.
+        &#34;&#34;&#34;
+        self._appliance = newName
+
+    @property
+    def crew(self) -&gt; Dict[Role, int]:
+        self._crew = {i: v for (i, v) in self._crew.items() if v}
+        return self._crew
+
+    def __repr__(self):
+        return f&#34;{self.crew}&#34;
+
+    def __call__(self) -&gt; Tuple[str, Dict[Role, int], int]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return (self.appliance, self.crew, *self.limits)
+
+    def change(self, role: Union[Role, dict], value: int = None, minimum: int = None, maximum: int = None) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the crew information of the Appliance.
+
+        Args:
+            role (Role, dict): Roles to change.
+
+                (Role): Changes the number of &#39;Role&#39; in the Appliance&#39;s crew to &#39;value&#39;.
+
+                (dict): Updates the crew with the items of the dictionary.
+
+            value (int):       Updates &#39;role&#39; in crew to &#39;value&#39;.
+            minimum (int):     Updates minimum number of crew required on the Appliance.
+            maximum (int):     Updates maximum number of crew allowed on the Appliance.
+
+        Raises:
+            TypeError:  Arguments are of the incorrect types.
+            ValueError: New crew exceeds maximum number of Personnel allowed in the Appliance.
+        &#34;&#34;&#34;
+        if minimum:
+            if not isinstance(minimum, int):
+                raise TypeError(&#34;Minimum has to be an &lt;integer&gt;&#34;)
+            self.limits[0] = minimum
+        if maximum:
+            if not isinstance(maximum, int):
+                raise TypeError(&#34;Maximum has to be an &lt;integer&gt;&#34;)
+            self.limits[1] = maximum
+
+        if isinstance(role, dict):
+            err = erri = errj = []
+            for i, j in role.items():
+                if not isinstance(i, Role):
+                    erri.append(i)
+                if not isinstance(j, int):
+                    errj.append(j)
+            if erri:
+                err.append(f&#34;{&#39;, &#39;.join(erri): Only &lt;Role&gt; can be added to crew}&#34;)
+            if errj:
+                err.append(f&#34;{&#39;, &#39;.join(errj): Only &lt;integer&gt; values are allowed}&#34;)
+            if err:
+                raise TypeError(f&#34;{&#39;&amp; &#39;.join(err)}&#34;)
+        elif isinstance(role, Role):
+            if not value:
+                raise AttributeError(f&#34;Number of {role} has to be declared&#34;)
+            elif not isinstance(value, int):
+                raise TypeError(&#34;Only &lt;integer&gt; values are allowed&#34;)
+            role = {role: value}
+        else:
+            raise TypeError(&#34;Only &lt;Role&gt; can be added to crew.&#34;)
+
+        crew = {**self.crew, **role}
+        if sum(crew.values()) &gt; self.limits[1]:
+            raise ValueError(&#34;Total crew exceeds maximum of the appliance&#34;)
+        self._crew.update(role)
+
+
+class Vehicle(Appliance):
+    &#34;&#34;&#34;
+    Creates a Vehicle using an existing Appliance.
+
+    Attributes:
+        callsign (str): Unique callsign of the Vehicle.
+        plate (str):    Unique plate number of the Vehicle.
+        active (bool):  Returns True if the Vehicle is on run and False if the Vehicle is off run.
+    &#34;&#34;&#34;
+
+    def __init__(self, callsign: str, appliance: Appliance, plateNumber: str, active: bool = True):
+        &#34;&#34;&#34;
+        Args:
+            callsign (str):        Unique callsign of the Vehicle.
+            appliance (Appliance): Appliance of the Vehicle.
+            plateNumber (str):     Unique plate number of the Vehicle.
+            active (bool):         Run state of the Vehicle.
+
+        Raises:
+            TypeError: If arguments are of the incorrect types.
+        &#34;&#34;&#34;
+        if not isinstance(appliance, Appliance):
+            raise TypeError(f&#34;{appliance} is not an Appliance. Create the Appliance first&#34;)
+        self._callsign, self._plateNumber, self._active = callsign, plateNumber, active
+        super().__init__(appliance.appliance, appliance.crew, *appliance.limits)
+
+    @property
+    def callsign(self) -&gt; str:
+        return self._callsign
+
+    @callsign.setter
+    def callsign(self, newCallsign) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the callsign of the Vehicle.
+        &#34;&#34;&#34;
+        self._callsign = newCallsign
+
+    @property
+    def plate(self) -&gt; str:
+        return self._plateNumber
+
+    @plate.setter
+    def plate(self, newPlate) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the plate number of the Vehicle.
+        &#34;&#34;&#34;
+        self._plateNumber = newPlate
+
+    @property
+    def active(self) -&gt; bool:
+        return self._active
+
+    @active.setter
+    def active(self, val: bool) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active state of the Vehicle.
+        &#34;&#34;&#34;
+        if not isinstance(val, bool):
+            raise TypeError(&#34;Only &lt;boolean&gt; values are allowed&#34;)
+        self._active = val
+
+    def onRun(self) -&gt; None:
+        &#34;&#34;&#34;
+        Sets active state of the Vehicle to True.
+        &#34;&#34;&#34;
+        self.active = True
+
+    def offRun(self) -&gt; None:
+        &#34;&#34;&#34;
+        Sets active state of the Vehicle to False.
+        &#34;&#34;&#34;
+        self.active = False
+
+    def __repr__(self):
+        return f&#34;{self.callsign} ({self.plate}) -- {&#39;On run&#39; if self.active else &#39;Off run&#39;}&#34;
+
+    def __call__(self) -&gt; Dict[str, Union[str, Dict[Role, int], List[int]]]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return {
+            &#39;callsign&#39;: self.callsign,
+            &#39;appliance&#39;: self.appliance,
+            &#39;crew&#39;: self.crew,
+            &#39;limits&#39;: self.limits
+        }
+
+
+def safeLoad(function: Callable) -&gt; Any:
+    &#34;&#34;&#34;
+    Decorator to safely edit the Rota.
+    &#34;&#34;&#34;
+
+    def runFunction(self, *args, **kwargs):
+        self._load()
+        function(self, *args, **kwargs)
+        self._save()
+
+    return runFunction
+
+
+class Rota(object):
+    &#34;&#34;&#34;
+    A data structure holding information of the Personnel assigned to the Rota and the turnout history.
+
+    Attributes:
+        personnel (List[Personnel]): A list of all the Personnel assigned to the Rota.
+    &#34;&#34;&#34;
+
+    def __init__(self, fileName: str = None, rootDir: str = &#34;.&#34;, rota: Union[str, int] = None):
+        &#34;&#34;&#34;
+        Args:
+            fileName (str):  Name of the save file. If not specified, the default file name will be set to
+                             &#34;Rota `rota`&#34;.
+            rootDir (dir):   Directory where the sve file is located. If not specified, the directory will be set to be
+                             the current working directory.
+            rota (str, int): The Rota number or name.
+
+        The file will be saved with the *.rt extension.
+        &#34;&#34;&#34;
+        if not (rota or fileName):
+            sys.exit(&#39;Provide rota number to create a new rota or log file directory to load data&#39;)
+        self.rota, self._fileName, self._rootDir = rota, fileName, rootDir
+        self._personnel = {}
+        if not self._fileName:
+            if not rota:
+                raise NameError(&#34;Declare rota number to create a new rota&#34;)
+            self._fileName = f&#34;Rota {self.rota}.rt&#34;
+            self._rootDir = rootDir
+        self._load()
+
+    @property
+    def personnel(self) -&gt; Dict[str, Personnel]:
+        return {i.id: i for i in self._personnel}
+
+    def __call__(self, arg=None) -&gt; Union[Personnel, Dict[str, Union[str, List[Personnel]]]]:
+        &#34;&#34;&#34;
+        Retrieves specific data from the data structure.
+
+        Args:
+            arg (str, Personnel): Retrieves the Personnel from the Rota through the ID or returns the argument if the
+                                  Personnel exists in the Rota. Without an argument, returns a human-readable data.
+        &#34;&#34;&#34;
+        if arg:
+            if isinstance(arg, Personnel) and arg.id in self.personnel:
+                return arg
+            elif isinstance(arg, str) and arg in self.personnel:
+                return self.personnel[arg]
+            else:
+                print(f&#34;{arg} does not exist in this rota&#34;)
+        else:
+            return {
+                &#39;rota&#39;: self.rota,
+                &#39;personnel&#39;: list(self.personnel.values())
+            }
+
+    @safeLoad
+    def __add__(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]) -&gt; None:
+        if isinstance(other, Rota):
+            self._personnel = {**self._personnel, **other._personnel}
+        elif isinstance(other, Personnel):
+            if other.id not in self.personnel:
+                self._personnel.update({other.id: other})
+        elif isinstance(other, list):
+            err = []
+            for i in other:
+                try:
+                    self + i
+                except TypeError:
+                    if type(i) not in err:
+                        err.append(type(i))
+            if err:
+                print(f&#34;{&#39;, &#39;.join(err)} cannot be operated on &lt;Rota&gt;&#34;)
+        else:
+            raise TypeError(f&#34;{type(other)} cannot be operated on &lt;Rota&gt;&#34;)
+
+    @safeLoad
+    def __sub__(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]) -&gt; None:
+        if isinstance(other, Rota):
+            self._personnel = list(set(self.personnel) - set(other.personnel))
+        elif isinstance(other, Personnel):
+            if other.id in self.personnel:
+                self._personnel.pop(list(self.personnel).index(other.id))
+        elif isinstance(other, list):
+            err = []
+            for i in other:
+                try:
+                    self - i
+                except TypeError:
+                    if type(i) not in err:
+                        err.append(type(i))
+            if err:
+                print(f&#34;{&#39;, &#39;.join(err)} cannot be operated on &lt;Rota&gt;&#34;)
+        else:
+            raise TypeError(f&#34;{type(other)} cannot be operated on &lt;Rota&gt;&#34;)
+
+    def add(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]):
+        &#34;&#34;&#34;
+        Adds Personnel to the Rota.
+
+        Args:
+            other (list, Personnel, Rota): A list of Personnel, a Personnel, or a Rota to add to the Rota.
+
+        Raises:
+            TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
+        &#34;&#34;&#34;
+        self + other
+
+    def sub(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]):
+        &#34;&#34;&#34;
+        Removes Personnel from the Rota.
+
+        Args:
+            other (list, Personnel): A list of Personnel, a Personnel, or a subset of a Rota to remove from the Rota.
+
+        Raise:
+            TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
+        &#34;&#34;&#34;
+        self - other
+
+    def __len__(self) -&gt; int:
+        return len(self.personnel)
+
+    def __repr__(self):
+        return f&#34;Rota {self.rota}&#34;
+
+    def __str__(self):
+        return f&#34;ROTA       : {self.rota}\n&#34; \
+               f&#34;PERSONNEL  : {len(self)}\n&#34;
+
+    def addRole(self, person: Union[Personnel, str], constraint: Union[Dict[Vehicle, bool], Vehicle] = None,
+                rule: bool = None) -&gt; None:
+        &#34;&#34;&#34;&#34;&#34;&#34;
+        if isinstance(person, Personnel) and person.id in self.personnel:
+            person.constraint(constraint, rule)
+        elif isinstance(person, str) and person in self.personnel:
+            person = self.personnel[person]
+            person.constraint(constraint, rule)
+        else:
+            print(f&#34;{person} does not exist&#34;)
+
+    def _save(self, fileName: str = None, rootDir: str = None) -&gt; None:
+        if fileName:
+            self._fileName = fileName
+        file = os.path.splitext(self._fileName)[0] + &#34;.rt&#34;
+        if rootDir:
+            self._rootDir = rootDir
+        with open(os.path.abspath(os.path.expanduser(os.path.join(self._rootDir, file))), &#39;wb&#39;) as f:
+            pickle.dump(self(), f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def _load(self) -&gt; None:
+        file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + &#34;.rt&#34;
+        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
+            print(&#34;File does not exist. Creating new rota.&#34;)
+            self._save()  # Creates data file
+        else:
+            with open(os.path.abspath(os.path.expanduser(file)), &#39;rb&#39;) as f:
+                data = pickle.load(f)
+            self.rota, self._personnel = data[&#39;rota&#39;], data[&#39;personnel&#39;]
+
+
+class Station(object):
+    &#34;&#34;&#34;
+    Creates a Station. The assets of the Station are Roles, Appliances, Vehicles, and Rotas. The data structure of the
+    Station is a dictionary of the assets and their unique IDs as keys.
+
+    Attributes:
+        roles (dict[str: Role]):           Dictionary of the Roles present in the Station.
+        appliances (dict[str: Appliance]): Dictionary of the Appliances present in the Station.
+        vehicles (dict[str: Vehicle]):     Dictionary of the Vehicles present in the Station.
+        rotas (dict[str: Rota]):           Dictionary of the Rotas present in the Station.
+        active (list):                     List of all the Vehicles that are on run in the Station.
+        data (dict):                       Dictionary of all the assets in the Station.
+    &#34;&#34;&#34;
+    _assets = Union[Role, Appliance, Vehicle, Rota]
+
+    def __init__(self, name: str, fileName: str = None, rootDir: str = &#39;.&#39;):
+        &#34;&#34;&#34;
+        Args:
+            name (str):     Name of the Station.
+            fileName (str): Name of the save file. If not specified, the file name will be the same as `name`.
+            rootDir (dir):  Directory where the sve file is located. If not specified, the directory will be set to be
+                            the current working directory.
+
+        The file will be saved with the *.stn extension.
+        &#34;&#34;&#34;
+        self.name, self._fileName, self._rootDir = name, fileName, rootDir
+        self._roles = self._appliances = self._vehicles = self._rotas = {}
+        if not self._fileName:
+            self._fileName = self.name
+
+    @property
+    def roles(self) -&gt; Dict[str, Role]:
+        return self._roles
+
+    @property
+    def appliances(self) -&gt; Dict[str, Appliance]:
+        return self._appliances
+
+    @property
+    def vehicles(self) -&gt; Dict[str, Vehicle]:
+        return self._vehicles
+
+    @property
+    def rotas(self) -&gt; Dict[Union[str, int], Rota]:
+        return self._rotas
+
+    @property
+    def active(self) -&gt; List[Vehicle]:
+        return [i for i in self.vehicles.values() if i.active]
+
+    @property
+    def data(self) -&gt; Dict[Union[str, int], Union[str, Role, Appliance, Vehicle, Rota]]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        :return:
+        &#34;&#34;&#34;
+        return {**self.roles, **self.appliances, **self.vehicles, **self.rotas}
+
+    def __call__(self, arg: Union[str, int, _assets]) -&gt; Union[_assets, dict]:
+        &#34;&#34;&#34;
+        Returns:
+             The Station asset or the dictionary of assets.
+
+        Raises:
+            KeyError: If asset identifier or asset does not exist in the Station.
+        &#34;&#34;&#34;
+        if arg:
+            return self.data[arg]
+        else:
+            return self.data
+
+    def _addAsset(self, arg1: Union[_assets, str, int, List[_assets]], Asset: Type[_assets],
+                  assetDict: Dict[str, _assets], assetIdentifier: str, **kwargs) \
+            -&gt; Union[_assets, List[_assets]]:
+        &#34;&#34;&#34;
+        General Asset generation method. The Assets can be any from Role, Appliance, Vehicle, or Rota.
+
+        Args:
+            arg1 (Asset, str, list): The Asset to add.
+
+                (Asset): Adds an existing Asset to the Station.
+
+                (str):   Name/Callsign/Rota of the Asset.
+
+                (list):  List of Assets to add to the Station.
+
+            Asset (class):           Asset to generate.
+            assetDict (dict):        Dictionary containing the Assets of the Station.
+            assetIdentifier (str):   Unique identifier of the Asset.
+            kwargs:                  Remaining arguments required to create the Asset.
+
+        Returns:
+            Asset
+
+        Raises:
+            TypeError: If kwargs are of the incorrect types
+        &#34;&#34;&#34;
+        if isinstance(arg1, Asset) and arg1.__getattribute__(assetIdentifier) in assetDict:
+            return assetDict[arg1.__getattribute__(assetIdentifier)]
+        elif isinstance(arg1, str) and arg1 in assetDict:
+            return assetDict[arg1]
+        elif isinstance(arg1, list):
+            data = []
+            data.extend(Asset for i in arg1 if isinstance(i, Asset))
+            print(f&#34;{&#39;, &#39;.join([str(i) for i in arg1 if arg1 is not isinstance(i, Asset)])}&#34;)
+            return data
+        else:  # Tries to create the asset using the arguments
+            asset = Asset(arg1, **kwargs)
+            self._load()
+            identifier = asset.__getattribute__(assetIdentifier)
+
+            if identifier in self.data and identifier not in assetDict:
+                raise TypeError(f&#34;{arg1} has already been declared as a &lt;{self.data[identifier]}&gt;&#34;)
+
+            if identifier not in assetDict:
+                assetDict.update({identifier: asset})
+                self._save()
+                return asset
+            else:
+                return assetDict[identifier]
+
+    def role(self, name: Union[Role, str, List[Role]],
+             constraint: Union[Vehicle, dict, List[Vehicle]] = None, rule: bool = False, inherit: Role = None) \
+            -&gt; Union[Role, List[Role]]:
+        &#34;&#34;&#34;
+        Creates and adds a Role as a Station asset.
+
+        Args:
+            name (str, Role, list):           The Role to add to the Station.
+
+                (Role):     Adds an existing Role to the Station.
+
+                (str):      Name of the Role to be created.
+
+                (list):     List of Roles to add to the Station.
+
+            constraint (dict, list, Vehicle): Constraints of this Role.
+
+                (dict):     Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+                (list):     Adds the list of Vehicles to this Role&#39;s constraints.
+
+                (Vehicle):  Adds the Vehicle to this Role&#39;s constraints.
+
+            rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+            inherit (Role):                   Inherits the constraints of this Role.
+
+        Returns:
+            Role(s) added to the station
+
+        Raises:
+            TypeError: If arguments are of the incorrect types.
+        &#34;&#34;&#34;
+        return self._addAsset(name, Role, self.roles, &#39;role&#39;,
+                              constraint=constraint, rule=rule, inherit=inherit)
+
+    def appliance(self, name: Union[Appliance, str, List[Appliance]],
+                  crew: Dict[Vehicle, int] = None, minimum: int = 1, maximum: int = 1) \
+            -&gt; Union[Appliance, List[Appliance]]:
+        &#34;&#34;&#34;
+        Creates and adds an Appliance as a Station asset.
+
+        Args:
+            name (Appliance, str, list): The Appliance to add to the Station.
+
+                (Appliance): Adds an existing Appliance to the Station.
+
+                (str):       Name of the Appliance to be created.
+
+                (list):      List of Appliances to be added to the Station.
+
+            crew (dict):                 Crew allowed on the Appliance.
+            minimum (int):               Minimum number of Personnel required on the Appliance.
+            maximum (int):               Maximum number of Personnel allowed on the Appliance.
+
+        Returns:
+            Appliance(s) added to the Station.
+
+        Raises:
+            TypeError:  If arguments are of the incorrect types.
+            ValueError: Crew not added or maximum is more than minimum.
+        &#34;&#34;&#34;
+        return self._addAsset(name, Appliance, self.appliances, &#39;appliance&#39;,
+                              crew=crew, minimum=minimum, maximum=maximum)
+
+    def vehicle(self, callsign: Union[Vehicle, str, List[Vehicle]],
+                appliance: Appliance = None, plateNumber: str = None, active: bool = True)\
+            -&gt; Union[Vehicle, List[Vehicle]]:
+        &#34;&#34;&#34;
+        Args:
+            callsign (Vehicle, str, list): The Vehicle to add to the Station.
+
+                (Vehicle): Adds an existing Vehicle to the Station.
+
+                (str):     Unique callsign of the Vehicle to be created.
+
+                (list):    List of Vehicles to add to the Station.
+
+            appliance (Appliance):         Appliance of the Vehicle.
+            plateNumber (str):             Unique plate number of the Vehicle.
+            active (bool):                 Run state of the Vehicle.
+
+        Raises:
+            TypeError: If arguments are of the incorrect type.
+        &#34;&#34;&#34;
+        return self._addAsset(callsign, Vehicle, self.vehicles, &#39;callsign&#39;,
+                              appliance=appliance, plateNumber=plateNumber, active=active)
+
+    def rota(self, rota: Union[Rota, int, str, List[Rota]], fileName: str = None, rootDir: str = &#39;.&#39;) \
+            -&gt; Union[Rota, List[Rota]]:
+        &#34;&#34;&#34;
+        Args:
+            rota (Rota, int, list): The Rota to add to the Station:
+
+                (Rota):     Adds an existing Rota to the Station.
+
+                (int, str): The number or name of the Rota to be created.
+
+                (list):     List of Rotas to add to the Station.
+
+            fileName (str):         Name of the save file. If not specified, the default file name will be set to
+                                    &#34;Rota `rota`&#34;.
+            rootDir (str):          Directory where the sve file is located. If not specified, the directory will be set
+                                    to be the current working directory.
+
+        The file will be saved with the *.rt extension.
+        &#34;&#34;&#34;
+        return self._addAsset(rota, Rota, self.rotas, &#39;rota&#39;,
+                              fileName=fileName, rootDir=rootDir)
+
+    def personnel(self, rota: Union[Rota, int, List[Union[Rota, int]]],
+                  name: Union[Personnel, str, List[Union[Personnel, str]]], role: Role = None) \
+            -&gt; Union[Personnel, List[Personnel]]:
+        &#34;&#34;&#34;
+        Creates and adds Personnel to a specific Rota.
+
+        Args:
+            rota (Rota, int, list):      Rota(s) to add Personnel to.
+            name (Personnel, str, list): (List of) Personnel to create and add to the specified Rota.
+
+                (Personnel): Adds existing Personnel to the Rota(s).
+
+                (str):       Name of the Personnel to be created.
+
+                (list):      List of Personnel to add to the Rota(s)
+
+            role (Role):                 Role of Personnel to create.
+
+        Returns:
+            Personnel that has been added to the Rota
+        &#34;&#34;&#34;
+        if not isinstance(rota, (Rota, int, list)):
+            raise TypeError(&#34;&lt;Personnel&gt; can be added only to a &lt;Rota&gt;&#34;)
+        elif isinstance(rota, Rota):
+            if rota.rota not in self.rotas:
+                raise KeyError(f&#34;Rota {rota.rota} is not in the Station&#34;)
+            rota = [self(rota.rota)]
+        elif isinstance(rota, int):
+            if rota in self.rotas:
+                raise KeyError(f&#34;Rota {rota} is not in the Station&#34;)
+            rota = [self(rota)]
+        elif isinstance(rota, list):
+            if not (all(isinstance(i, Rota) for i in rota) or all(isinstance(i, int) for i in rota)):
+                raise TypeError(f&#34;{&#39;, &#39;.join([i for i in rota if not isinstance(i, Rota)])} is/are not &lt;Rota&gt;&#34;)
+            if all(isinstance(i, int) for i in rota):
+                rota = [self(i) for i in rota]
+            pass
+        else:
+            raise TypeError(&#34;&lt;Personnel&gt; can be added only to a &lt;Rota&gt;&#34;)
+
+        result = errs = []
+        for r in rota:
+            try:
+                if isinstance(name, Personnel):
+                    r + name
+                    result.append(name)
+                elif isinstance(name, str):
+                    if not (role or isinstance(role, Role)):
+                        raise TypeError
+                    p = Personnel(name, role)
+                    r + p
+                    result.append(p)
+                elif isinstance(name, list):
+                    [self.personnel(r, i, role) for i in name]
+                else:
+                    raise NameError(f&#34;{str(name)}&#34;)
+            except NameError as err:
+                errs.append(err.args[0])
+            except TypeError:
+                raise TypeError(&#34;A &lt;Role&gt; has to be specified&#34;)
+
+        if errs:
+            print(f&#34;{&#39;, &#39;.join([str(i) for i in errs])} has/have to be &lt;Personnel&gt; to be added to &lt;Rota&gt;.&#34;)
+
+        return result if len(result) &gt; 0 else result[0]
+
+    def __add__(self, other: Union[_assets, List[_assets]]) -&gt; Union[_assets, List[_assets]]:
+        if isinstance(other, Rota):
+            return self.rota(other)
+        elif isinstance(other, Role):
+            return self.role(other)
+        elif isinstance(other, Appliance):
+            return self.appliance(other)
+        elif isinstance(other, Vehicle):
+            return self.vehicle(other)
+        elif isinstance(other, list):
+            return [self + i for i in other]
+        else:
+            raise TypeError(f&#34;{type(other)} cannot be operated on &lt;Station&gt;&#34;)
+
+    def __sub__(self, other: Union[str, _assets, List[Union[str, _assets]]]) -&gt; None:
+        if isinstance(other, Rota):
+            self._rotas.pop(other.rota, None)
+        elif isinstance(other, Role):
+            self._roles.pop(other.role, None)
+        elif isinstance(other, Appliance):
+            self._appliances.pop(other.appliance, None)
+        elif isinstance(other, Vehicle):
+            self._vehicles.pop(other.callsign, None)
+        elif isinstance(other, str):
+            if other not in self.data:
+                raise KeyError(f&#34;{other} is not a Station asset&#34;)
+            other = self.data[other]
+            self - other
+        elif isinstance(other, list):
+            errk = errt = errs = []
+            for i in other:
+                try:
+                    self - i
+                except KeyError as err:
+                    errk.append(err.args[0].split(&#39; is not a &#39;)[0])
+                except TypeError as err:
+                    errt.append(err.args[0].split(&#39; has to be&#39;)[0])
+            if errk:
+                errs.append(f&#34;{&#39;, &#39;.join([i for i in errk])} is/are not Station asset(s).&#34;)
+            if errt:
+                errs.append(f&#34;{&#39;, &#39;.join([i for i in errt])} has/have to be &lt;Role&gt;, &lt;Appliance&gt;, &lt;Vehicle&gt;, or &lt;Rota&gt;.&#34;)
+            if errs:
+                raise TypeError(&#39; &#39;.join(errs))
+        else:
+            raise TypeError(f&#34;{other} has to be a &lt;Role&gt;, &lt;Appliance&gt;, &lt;Vehicle&gt;, or &lt;Rota&gt;&#34;)
+
+    def add(self, other: Union[_assets, List[_assets]]) -&gt; Union[_assets, List[_assets]]:
+        &#34;&#34;&#34;
+        Adds an asset or a list of assets to the Station.
+
+        Args:
+            other (Role, Appliance, Vehicle, Rota, list): The asset or list of assets to add to the Station.
+
+        Return:
+            The asset added to the Station.
+        &#34;&#34;&#34;
+        return self + other
+
+    def remove(self, other: Union[str, _assets, List[Union[str, _assets]]]) -&gt; None:
+        &#34;&#34;&#34;
+        Removes an asset or a list of assets from the Station.
+
+        Args:
+            other (Role, Appliance, Vehicle, Rota, list): The asset or list of assets to remove from the Station.
+        &#34;&#34;&#34;
+        self - other
+
+    def activate(self, vehicle: Union[Vehicle, str, List[Union[Vehicle, str]]], active: bool = True) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active status of a Vehicle asset from the Station.
+
+        Args:
+            vehicle (Vehicle, str, list): Changes the active status the Vehicle(s).
+            active (bool):                Active -&gt; True; Not active -&gt; False.
+        &#34;&#34;&#34;
+        if isinstance(vehicle, Vehicle):
+            self.add(vehicle)
+            vehicle.active = active
+        elif isinstance(vehicle, str):
+            if vehicle in self.vehicles:
+                self.vehicles[vehicle].active = active
+            else:
+                raise NameError(f&#34;{vehicle} is not a &lt;Vehicle&gt;&#34;)
+        elif isinstance(vehicle, list):
+            for v in vehicle:
+                self.activate(v, active)
+        else:
+            raise NameError(f&#34;{vehicle} is not a &lt;Vehicle&gt;&#34;)
+
+    def deactivate(self, vehicle: Union[Vehicle, str, List[Union[Vehicle, str]]]) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active status of a Vehicle asset from the Station to False.
+
+        Args:
+            vehicle (Vehicle, str, list): Changes the active status the Vehicle(s) to False.
+        &#34;&#34;&#34;
+        self.activate(vehicle, False)
+
+    def offRun(self) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active status of all the Vehicle assets from the Station to False.
+        &#34;&#34;&#34;
+        [self.deactivate(i) for i in self.vehicles]
+
+    def _save(self, fileName: str = None, rootDir: str = None) -&gt; None:
+        &#34;&#34;&#34;
+        Saves Station data on disk.
+
+        Args:
+            fileName (str): Name of the save file. If not specified, the default file name will be used.
+            rootDir (dir):  Directory where the sve file is located. If not specified, the default directory will
+                            be used.
+        &#34;&#34;&#34;
+        if fileName:
+            self._fileName = fileName
+        file = os.path.splitext(self._fileName)[0] + &#34;.stn&#34;
+        if rootDir:
+            self._rootDir = rootDir
+        with open(os.path.abspath(os.path.expanduser(os.path.join(self._rootDir, file))), &#39;wb&#39;) as f:
+            data = (self.roles, self.appliances, self.vehicles, self.rotas)
+            pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def _load(self) -&gt; None:
+        &#34;&#34;&#34;
+        Loads Station data from disk if it exists or creates a new one if it does not.
+        &#34;&#34;&#34;
+        file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + &#34;.stn&#34;
+        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
+            print(&#34;File does not exist. Creating new rota.&#34;)
+            self._save()  # Creates data file
+        else:
+            with open(os.path.abspath(os.path.expanduser(file)), &#39;rb&#39;) as f:
+                data = pickle.load(f)
+            self._roles, self._appliances, self._rotas = data</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="rtt.library.safeLoad"><code class="name flex">
+<span>def <span class="ident">safeLoad</span></span>(<span>function: Callable) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decorator to safely edit the Rota.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def safeLoad(function: Callable) -&gt; Any:
+    &#34;&#34;&#34;
+    Decorator to safely edit the Rota.
+    &#34;&#34;&#34;
+
+    def runFunction(self, *args, **kwargs):
+        self._load()
+        function(self, *args, **kwargs)
+        self._save()
+
+    return runFunction</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="rtt.library.Appliance"><code class="flex name class">
+<span>class <span class="ident">Appliance</span></span>
+<span>(</span><span>name, crew: Dict[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, int], minimum: int = 1, maximum: int = 1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates an object that defines the Appliance of a Vehicle.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>appliance</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the Appliance.</dd>
+<dt><strong><code>crew</code></strong> :&ensp;<code>dict</code></dt>
+<dd>
+<p>Dictionary of Roles and their maximum number in the Appliance.</p>
+</dd>
+<dt><strong><code>limits</code></strong> :&ensp;<code>list</code></dt>
+<dd>Minimum and maximum number of Personnel in the Appliance.</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the Appliance.</dd>
+<dt><strong><code>crew</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Crew allowed on the Appliance.</dd>
+<dt><strong><code>minimum</code></strong> :&ensp;<code>int</code></dt>
+<dd>Minimum number of Personnel required on the Appliance.</dd>
+<dt><strong><code>maximum</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of Personnel allowed on the Appliance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>Arguments are of the incorrect types.</dd>
+<dt><code>ValueError</code></dt>
+<dd>Crew not added or maximum is more than minimum.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Appliance(object):
+    &#34;&#34;&#34;
+    Creates an object that defines the Appliance of a Vehicle.
+
+    Attributes:
+        appliance (str): Name of the Appliance.
+        crew (dict):     Dictionary of Roles and their maximum number in the Appliance.
+        limits (list):   Minimum and maximum number of Personnel in the Appliance.
+    &#34;&#34;&#34;
+
+    def __init__(self, name, crew: Dict[Role, int], minimum: int = 1, maximum: int = 1):
+        &#34;&#34;&#34;
+        Args:
+            name (str):    Name of the Appliance.
+            crew (dict):   Crew allowed on the Appliance.
+            minimum (int): Minimum number of Personnel required on the Appliance.
+            maximum (int): Maximum number of Personnel allowed on the Appliance.
+
+        Raises:
+            TypeError:  Arguments are of the incorrect types.
+            ValueError: Crew not added or maximum is more than minimum.
+        &#34;&#34;&#34;
+        if not crew:
+            raise ValueError(f&#34;Assign minimum crew of {name}&#34;)
+        elif not isinstance(crew, dict):
+            raise TypeError(&#34;Crew has to be represented as a &lt;dict&gt;&#34;)
+        if not (isinstance(minimum, int) and isinstance(maximum, int)):
+            raise TypeError(&#34;Minimum and Maximum have to be &lt;integer&gt;&#34;)
+        if maximum &lt; minimum:
+            raise ValueError(f&#34;Maximum cannot be less than the minimum&#34;)
+        maximum = maximum if maximum &gt;= sum(crew.values()) else sum(crew.values())
+        self._appliance, self._crew, self._limits = name, crew, [minimum, maximum]
+
+    @property
+    def limits(self) -&gt; List[int]:
+        return self._limits
+
+    @limits.setter
+    def limits(self, newLimits) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the crew limits on the Appliance.
+        &#34;&#34;&#34;
+        if not isinstance(newLimits, (list, tuple)):
+            raise TypeError(f&#34;Limits have to be have to be represented as a list or tuple&#34;)
+        if len(newLimits) != 2:
+            raise ValueError(&#34;Incorrect number of limits&#34;)
+        self._limits = list(newLimits)
+
+    @property
+    def appliance(self) -&gt; str:
+        return self._appliance
+
+    @appliance.setter
+    def appliance(self, newName) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the name of the Appliance.
+        &#34;&#34;&#34;
+        self._appliance = newName
+
+    @property
+    def crew(self) -&gt; Dict[Role, int]:
+        self._crew = {i: v for (i, v) in self._crew.items() if v}
+        return self._crew
+
+    def __repr__(self):
+        return f&#34;{self.crew}&#34;
+
+    def __call__(self) -&gt; Tuple[str, Dict[Role, int], int]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return (self.appliance, self.crew, *self.limits)
+
+    def change(self, role: Union[Role, dict], value: int = None, minimum: int = None, maximum: int = None) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the crew information of the Appliance.
+
+        Args:
+            role (Role, dict): Roles to change.
+
+                (Role): Changes the number of &#39;Role&#39; in the Appliance&#39;s crew to &#39;value&#39;.
+
+                (dict): Updates the crew with the items of the dictionary.
+
+            value (int):       Updates &#39;role&#39; in crew to &#39;value&#39;.
+            minimum (int):     Updates minimum number of crew required on the Appliance.
+            maximum (int):     Updates maximum number of crew allowed on the Appliance.
+
+        Raises:
+            TypeError:  Arguments are of the incorrect types.
+            ValueError: New crew exceeds maximum number of Personnel allowed in the Appliance.
+        &#34;&#34;&#34;
+        if minimum:
+            if not isinstance(minimum, int):
+                raise TypeError(&#34;Minimum has to be an &lt;integer&gt;&#34;)
+            self.limits[0] = minimum
+        if maximum:
+            if not isinstance(maximum, int):
+                raise TypeError(&#34;Maximum has to be an &lt;integer&gt;&#34;)
+            self.limits[1] = maximum
+
+        if isinstance(role, dict):
+            err = erri = errj = []
+            for i, j in role.items():
+                if not isinstance(i, Role):
+                    erri.append(i)
+                if not isinstance(j, int):
+                    errj.append(j)
+            if erri:
+                err.append(f&#34;{&#39;, &#39;.join(erri): Only &lt;Role&gt; can be added to crew}&#34;)
+            if errj:
+                err.append(f&#34;{&#39;, &#39;.join(errj): Only &lt;integer&gt; values are allowed}&#34;)
+            if err:
+                raise TypeError(f&#34;{&#39;&amp; &#39;.join(err)}&#34;)
+        elif isinstance(role, Role):
+            if not value:
+                raise AttributeError(f&#34;Number of {role} has to be declared&#34;)
+            elif not isinstance(value, int):
+                raise TypeError(&#34;Only &lt;integer&gt; values are allowed&#34;)
+            role = {role: value}
+        else:
+            raise TypeError(&#34;Only &lt;Role&gt; can be added to crew.&#34;)
+
+        crew = {**self.crew, **role}
+        if sum(crew.values()) &gt; self.limits[1]:
+            raise ValueError(&#34;Total crew exceeds maximum of the appliance&#34;)
+        self._crew.update(role)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rtt.library.Appliance.appliance"><code class="name">var <span class="ident">appliance</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def appliance(self) -&gt; str:
+    return self._appliance</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Appliance.crew"><code class="name">var <span class="ident">crew</span> : Dict[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, int]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def crew(self) -&gt; Dict[Role, int]:
+    self._crew = {i: v for (i, v) in self._crew.items() if v}
+    return self._crew</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Appliance.limits"><code class="name">var <span class="ident">limits</span> : List[int]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def limits(self) -&gt; List[int]:
+    return self._limits</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="rtt.library.Appliance.change"><code class="name flex">
+<span>def <span class="ident">change</span></span>(<span>self, role: Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, dict], value: int = None, minimum: int = None, maximum: int = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Changes the crew information of the Appliance.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>role</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, dict</code></dt>
+<dd>
+<p>Roles to change.</p>
+<p>(Role): Changes the number of 'Role' in the Appliance's crew to 'value'.</p>
+<p>(dict): Updates the crew with the items of the dictionary.</p>
+</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<p>Updates 'role' in crew to 'value'.</p>
+</dd>
+<dt><strong><code>minimum</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<p>Updates minimum number of crew required on the Appliance.</p>
+</dd>
+<dt><strong><code>maximum</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<p>Updates maximum number of crew allowed on the Appliance.</p>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>Arguments are of the incorrect types.</dd>
+<dt><code>ValueError</code></dt>
+<dd>New crew exceeds maximum number of Personnel allowed in the Appliance.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def change(self, role: Union[Role, dict], value: int = None, minimum: int = None, maximum: int = None) -&gt; None:
+    &#34;&#34;&#34;
+    Changes the crew information of the Appliance.
+
+    Args:
+        role (Role, dict): Roles to change.
+
+            (Role): Changes the number of &#39;Role&#39; in the Appliance&#39;s crew to &#39;value&#39;.
+
+            (dict): Updates the crew with the items of the dictionary.
+
+        value (int):       Updates &#39;role&#39; in crew to &#39;value&#39;.
+        minimum (int):     Updates minimum number of crew required on the Appliance.
+        maximum (int):     Updates maximum number of crew allowed on the Appliance.
+
+    Raises:
+        TypeError:  Arguments are of the incorrect types.
+        ValueError: New crew exceeds maximum number of Personnel allowed in the Appliance.
+    &#34;&#34;&#34;
+    if minimum:
+        if not isinstance(minimum, int):
+            raise TypeError(&#34;Minimum has to be an &lt;integer&gt;&#34;)
+        self.limits[0] = minimum
+    if maximum:
+        if not isinstance(maximum, int):
+            raise TypeError(&#34;Maximum has to be an &lt;integer&gt;&#34;)
+        self.limits[1] = maximum
+
+    if isinstance(role, dict):
+        err = erri = errj = []
+        for i, j in role.items():
+            if not isinstance(i, Role):
+                erri.append(i)
+            if not isinstance(j, int):
+                errj.append(j)
+        if erri:
+            err.append(f&#34;{&#39;, &#39;.join(erri): Only &lt;Role&gt; can be added to crew}&#34;)
+        if errj:
+            err.append(f&#34;{&#39;, &#39;.join(errj): Only &lt;integer&gt; values are allowed}&#34;)
+        if err:
+            raise TypeError(f&#34;{&#39;&amp; &#39;.join(err)}&#34;)
+    elif isinstance(role, Role):
+        if not value:
+            raise AttributeError(f&#34;Number of {role} has to be declared&#34;)
+        elif not isinstance(value, int):
+            raise TypeError(&#34;Only &lt;integer&gt; values are allowed&#34;)
+        role = {role: value}
+    else:
+        raise TypeError(&#34;Only &lt;Role&gt; can be added to crew.&#34;)
+
+    crew = {**self.crew, **role}
+    if sum(crew.values()) &gt; self.limits[1]:
+        raise ValueError(&#34;Total crew exceeds maximum of the appliance&#34;)
+    self._crew.update(role)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="rtt.library.Personnel"><code class="flex name class">
+<span>class <span class="ident">Personnel</span></span>
+<span>(</span><span>name: str, role: <a title="rtt.library.Role" href="#rtt.library.Role">Role</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a Personnel using an existing Role.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>Name of the Personnel.
+</code></pre>
+</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>  8-digits unique hash of the Personnel.
+</code></pre>
+</dd>
+<dt><strong><code>role</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>Name of the Personnel's Role.
+</code></pre>
+</dd>
+<dt><strong><code>constraints</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of Vehicles and rules. Shows which vehicle the
+current Role has access to. The constraints are retrieved
+from 2 sources &ndash; itself and its inherited role. The
+inherited constraints do not take precedence over its
+declared constraints.</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the Personnel.</dd>
+<dt><strong><code>role</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></code></dt>
+<dd>Inherits the properties and attributes of the Role.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Personnel(Role):
+    &#34;&#34;&#34;
+    Creates a Personnel using an existing Role.
+
+    Attributes:
+        name (str):         Name of the Personnel.
+        id (str):           8-digits unique hash of the Personnel.
+        role (str):         Name of the Personnel&#39;s Role.
+        constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
+                            current Role has access to. The constraints are retrieved
+                            from 2 sources -- itself and its inherited role. The
+                            inherited constraints do not take precedence over its
+                            declared constraints.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str, role: Role):
+        &#34;&#34;&#34;
+        Args:
+            name (str):  Name of the Personnel.
+            role (Role): Inherits the properties and attributes of the Role.
+        &#34;&#34;&#34;
+        self._name = name
+        if not isinstance(role, Role):
+            raise TypeError(&#34;Only &lt;Role&gt; can be used to create personnel&#34;)
+        super().__init__(role.role, inherit=role)
+
+    @property
+    def name(self) -&gt; str:
+        return self._name
+
+    @name.setter
+    def name(self, newName) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the name of the Personnel.
+        &#34;&#34;&#34;
+        self._name = newName
+
+    @property
+    def __id(self) -&gt; str:
+        return hashlib.sha1(f&#34;{self.name} @ {self.role}&#34;.encode()).hexdigest()
+
+    @property
+    def id(self) -&gt; str:
+        &#34;&#34;&#34;
+        8 digits slice of the unique hash of the Personnel.
+        &#34;&#34;&#34;
+        return self.__id[10:17]
+
+    def __repr__(self):
+        return self.id
+
+    def __str__(self):
+        return self.name
+
+    def __call__(self) -&gt; Dict[str, Union[str, Dict[&#34;Vehicle&#34;, bool]]]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return {
+            &#39;name&#39;: self.name,
+            &#39;role&#39;: self.role,
+            &#39;constraints&#39;: self.constraints
+        }</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rtt.library.Personnel.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"><p>8 digits slice of the unique hash of the Personnel.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def id(self) -&gt; str:
+    &#34;&#34;&#34;
+    8 digits slice of the unique hash of the Personnel.
+    &#34;&#34;&#34;
+    return self.__id[10:17]</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Personnel.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self) -&gt; str:
+    return self._name</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></b></code>:
+<ul class="hlist">
+<li><code><a title="rtt.library.Role.constraint" href="#rtt.library.Role.constraint">constraint</a></code></li>
+<li><code><a title="rtt.library.Role.constraints" href="#rtt.library.Role.constraints">constraints</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="rtt.library.Role"><code class="flex name class">
+<span>class <span class="ident">Role</span></span>
+<span>(</span><span>name: str, constraint: Union[_ForwardRef('<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>'), dict, list] = None, rule: bool = False, inherit: <a title="rtt.library.Role" href="#rtt.library.Role">Role</a> = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates an object that defines the Role of a Personnel.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>role</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>Name of the Role.
+</code></pre>
+</dd>
+<dt><strong><code>constraints</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of Vehicles and rules. Shows which vehicle the
+current Role has access to. The constraints are retrieved
+from 2 sources &ndash; itself and its inherited role. The
+inherited constraints do not take precedence over its
+declared constraints.</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>              Name of the Role
+</code></pre>
+</dd>
+<dt><strong><code>constraint</code></strong> :&ensp;<code><a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, dict, list</code></dt>
+<dd>
+<p>Constraints of this Role.</p>
+<p>(Vehicle): Adds the Vehicle to this Role's constraints.</p>
+<p>(dict):
+Adds the whole dictionary of constraints as this Role's constraints.</p>
+<p>(list):
+Adds the list of Vehicles to this Role's constraints.</p>
+</dd>
+<dt><strong><code>rule</code></strong> :&ensp;<code>bool</code></dt>
+<dd>
+<pre><code>             Rule for the constraint(s) if constraint is a list or Vehicle.
+</code></pre>
+</dd>
+<dt><strong><code>inherit</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></code></dt>
+<dd>
+<pre><code>          Inherits the constraints of this Role.
+</code></pre>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If arguments are of the incorrect type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Role(object):
+    &#34;&#34;&#34;
+    Creates an object that defines the Role of a Personnel.
+
+    Attributes:
+        role (str):         Name of the Role.
+        constraints (dict): Dictionary of Vehicles and rules. Shows which vehicle the
+                            current Role has access to. The constraints are retrieved
+                            from 2 sources -- itself and its inherited role. The
+                            inherited constraints do not take precedence over its
+                            declared constraints.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str,
+                 constraint: Union[&#34;Vehicle&#34;, dict, list] = None, rule: bool = False,
+                 inherit: &#34;Role&#34; = None):
+
+        &#34;&#34;&#34;
+        Args:
+            name (str):                       Name of the Role
+            constraint (Vehicle, dict, list): Constraints of this Role.
+
+                (Vehicle): Adds the Vehicle to this Role&#39;s constraints.
+
+                (dict):    Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+                (list):    Adds the list of Vehicles to this Role&#39;s constraints.
+
+            rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+            inherit (Role):                   Inherits the constraints of this Role.
+
+        Raises:
+            TypeError: If arguments are of the incorrect type.
+        &#34;&#34;&#34;
+        self.role, self._constraints, self._inheritance = name, {}, inherit
+
+        if not isinstance(rule, bool):
+            raise TypeError(&#34;Only boolean rules are allowed&#34;)
+
+        if inherit:
+            if not isinstance(inherit, Role):
+                raise TypeError(&#34;Only &lt;Role&gt; can be inherited&#34;)
+
+        if constraint:
+            self.constraint(constraint)
+
+    @property
+    def constraints(self) -&gt; Dict[&#34;Vehicle&#34;, bool]:
+        &#34;&#34;&#34;
+        Updates the Role&#39;s constraints if the inherited Role has a new constraint unless
+        declared beforehand. The declaration is usually made when creating the instance
+        and may be done post-creation through the constraint() method.
+        &#34;&#34;&#34;
+        if self._inheritance:
+            return {**self._inheritance.constraints, **self._constraints}
+        else:
+            return self._constraints
+
+    def constraint(self, constraint: Union[&#34;Vehicle&#34;, dict, list], rule: bool = False) -&gt; None:
+        &#34;&#34;&#34;
+        Declares a new constraint for this Role.
+
+        Args:
+           constraint (dict, list, Vehicle): Constraints of this Role.
+
+               (dict):    Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+               (list):    Adds the list of Vehicles to this Role&#39;s constraints.
+
+               (Vehicle): Adds the Vehicle to this Role&#39;s constraints.
+
+           rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+
+        Raises:
+            TypeError: If constraints or rules are of the incorrect types.
+        &#34;&#34;&#34;
+        if isinstance(constraint, dict):
+            err = erri = errj = []
+            for i, j in constraint.items():
+                if not isinstance(i, Vehicle):
+                    erri.append(i)
+                if not isinstance(j, bool):
+                    errj.append(j)
+                if erri:
+                    err.append(f&#34;{&#39;, &#39;.join(erri)}: Only &lt;Vehicle&gt; can be added as constraints&#34;)
+                if errj:
+                    err.append(f&#34;{&#39;, &#39;.join(errj)}: Only &lt;boolean&gt; rules are allowed&#34;)
+                if err:
+                    raise TypeError(f&#34;{&#39;&amp; &#39;.join(err)}&#34;)
+
+            self._constraints.update(constraint)
+        elif isinstance(constraint, Vehicle):
+            if not isinstance(rule, bool):
+                raise TypeError(&#34;Only &lt;boolean&gt; rules are allowed&#34;)
+            self._constraints.update({constraint: rule})
+        elif isinstance(constraint, list):
+            errs = []
+            for i in constraint:
+                if not isinstance(i, Vehicle):
+                    errs.append(i)
+            if errs:
+                raise TypeError(f&#34;{&#39;, &#39;.join(errs)}: Only &lt;Vehicle&gt; can be added as constraints&#34;)
+
+            [self._constraints.update({i: rule}) for i in constraint]
+        else:
+            raise TypeError(&#34;Only &lt;Vehicle&gt; can be added as constraints&#34;)
+
+    def __add__(self, other: &#34;Role&#34;) -&gt; None:
+        &#34;&#34;&#34;
+        Defines a one-way operation to add the constraint of an existing Role to the current Role.
+        &#34;&#34;&#34;
+        if not isinstance(other, Role):
+            raise TypeError(&#34;Only &lt;Role&gt; can be added to &lt;Role&gt;&#34;)
+        else:
+            if other.constraints:
+                for constraint, rule in other.constraints.items():
+                    if constraint not in self.constraints:
+                        self.constraint(constraint, rule)
+            else:
+                pass
+
+    def __repr__(self):
+        return self.role
+
+    def __str__(self):
+        return f&#34;{self.constraints if self.constraints else &#39;NONE&#39;}&#34;
+
+    def __call__(self) -&gt; Tuple[str, Dict[&#34;Vehicle&#34;, bool], str]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return self.role, self.constraints, self._inheritance.role</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rtt.library.Role.constraints"><code class="name">var <span class="ident">constraints</span> : Dict[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, bool]</code></dt>
+<dd>
+<div class="desc"><p>Updates the Role's constraints if the inherited Role has a new constraint unless
+declared beforehand. The declaration is usually made when creating the instance
+and may be done post-creation through the constraint() method.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def constraints(self) -&gt; Dict[&#34;Vehicle&#34;, bool]:
+    &#34;&#34;&#34;
+    Updates the Role&#39;s constraints if the inherited Role has a new constraint unless
+    declared beforehand. The declaration is usually made when creating the instance
+    and may be done post-creation through the constraint() method.
+    &#34;&#34;&#34;
+    if self._inheritance:
+        return {**self._inheritance.constraints, **self._constraints}
+    else:
+        return self._constraints</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="rtt.library.Role.constraint"><code class="name flex">
+<span>def <span class="ident">constraint</span></span>(<span>self, constraint: Union[_ForwardRef('<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>'), dict, list], rule: bool = False) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Declares a new constraint for this Role.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>constraint</code></strong> :&ensp;<code>dict, list, <a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a></code></dt>
+<dd>
+<p>Constraints of this Role.</p>
+<p>(dict):
+Adds the whole dictionary of constraints as this Role's constraints.</p>
+<p>(list):
+Adds the list of Vehicles to this Role's constraints.</p>
+<p>(Vehicle): Adds the Vehicle to this Role's constraints.</p>
+</dd>
+<dt><strong><code>rule</code></strong> :&ensp;<code>bool</code></dt>
+<dd>
+<pre><code>             Rule for the constraint(s) if constraint is a list or Vehicle.
+</code></pre>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If constraints or rules are of the incorrect types.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def constraint(self, constraint: Union[&#34;Vehicle&#34;, dict, list], rule: bool = False) -&gt; None:
+    &#34;&#34;&#34;
+    Declares a new constraint for this Role.
+
+    Args:
+       constraint (dict, list, Vehicle): Constraints of this Role.
+
+           (dict):    Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+           (list):    Adds the list of Vehicles to this Role&#39;s constraints.
+
+           (Vehicle): Adds the Vehicle to this Role&#39;s constraints.
+
+       rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+
+    Raises:
+        TypeError: If constraints or rules are of the incorrect types.
+    &#34;&#34;&#34;
+    if isinstance(constraint, dict):
+        err = erri = errj = []
+        for i, j in constraint.items():
+            if not isinstance(i, Vehicle):
+                erri.append(i)
+            if not isinstance(j, bool):
+                errj.append(j)
+            if erri:
+                err.append(f&#34;{&#39;, &#39;.join(erri)}: Only &lt;Vehicle&gt; can be added as constraints&#34;)
+            if errj:
+                err.append(f&#34;{&#39;, &#39;.join(errj)}: Only &lt;boolean&gt; rules are allowed&#34;)
+            if err:
+                raise TypeError(f&#34;{&#39;&amp; &#39;.join(err)}&#34;)
+
+        self._constraints.update(constraint)
+    elif isinstance(constraint, Vehicle):
+        if not isinstance(rule, bool):
+            raise TypeError(&#34;Only &lt;boolean&gt; rules are allowed&#34;)
+        self._constraints.update({constraint: rule})
+    elif isinstance(constraint, list):
+        errs = []
+        for i in constraint:
+            if not isinstance(i, Vehicle):
+                errs.append(i)
+        if errs:
+            raise TypeError(f&#34;{&#39;, &#39;.join(errs)}: Only &lt;Vehicle&gt; can be added as constraints&#34;)
+
+        [self._constraints.update({i: rule}) for i in constraint]
+    else:
+        raise TypeError(&#34;Only &lt;Vehicle&gt; can be added as constraints&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="rtt.library.Rota"><code class="flex name class">
+<span>class <span class="ident">Rota</span></span>
+<span>(</span><span>fileName: str = None, rootDir: str = '.', rota: Union[str, int] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A data structure holding information of the Personnel assigned to the Rota and the turnout history.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>personnel</code></strong> :&ensp;<code>List[<a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>]</code></dt>
+<dd>A list of all the Personnel assigned to the Rota.</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>fileName</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the save file. If not specified, the default file name will be set to
+"Rota <code>rota</code>".</dd>
+<dt><strong><code>rootDir</code></strong> :&ensp;<code>dir</code></dt>
+<dd>Directory where the sve file is located. If not specified, the directory will be set to be
+the current working directory.</dd>
+<dt><strong><code>rota</code></strong> :&ensp;<code>str, int</code></dt>
+<dd>The Rota number or name.</dd>
+</dl>
+<p>The file will be saved with the *.rt extension.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Rota(object):
+    &#34;&#34;&#34;
+    A data structure holding information of the Personnel assigned to the Rota and the turnout history.
+
+    Attributes:
+        personnel (List[Personnel]): A list of all the Personnel assigned to the Rota.
+    &#34;&#34;&#34;
+
+    def __init__(self, fileName: str = None, rootDir: str = &#34;.&#34;, rota: Union[str, int] = None):
+        &#34;&#34;&#34;
+        Args:
+            fileName (str):  Name of the save file. If not specified, the default file name will be set to
+                             &#34;Rota `rota`&#34;.
+            rootDir (dir):   Directory where the sve file is located. If not specified, the directory will be set to be
+                             the current working directory.
+            rota (str, int): The Rota number or name.
+
+        The file will be saved with the *.rt extension.
+        &#34;&#34;&#34;
+        if not (rota or fileName):
+            sys.exit(&#39;Provide rota number to create a new rota or log file directory to load data&#39;)
+        self.rota, self._fileName, self._rootDir = rota, fileName, rootDir
+        self._personnel = {}
+        if not self._fileName:
+            if not rota:
+                raise NameError(&#34;Declare rota number to create a new rota&#34;)
+            self._fileName = f&#34;Rota {self.rota}.rt&#34;
+            self._rootDir = rootDir
+        self._load()
+
+    @property
+    def personnel(self) -&gt; Dict[str, Personnel]:
+        return {i.id: i for i in self._personnel}
+
+    def __call__(self, arg=None) -&gt; Union[Personnel, Dict[str, Union[str, List[Personnel]]]]:
+        &#34;&#34;&#34;
+        Retrieves specific data from the data structure.
+
+        Args:
+            arg (str, Personnel): Retrieves the Personnel from the Rota through the ID or returns the argument if the
+                                  Personnel exists in the Rota. Without an argument, returns a human-readable data.
+        &#34;&#34;&#34;
+        if arg:
+            if isinstance(arg, Personnel) and arg.id in self.personnel:
+                return arg
+            elif isinstance(arg, str) and arg in self.personnel:
+                return self.personnel[arg]
+            else:
+                print(f&#34;{arg} does not exist in this rota&#34;)
+        else:
+            return {
+                &#39;rota&#39;: self.rota,
+                &#39;personnel&#39;: list(self.personnel.values())
+            }
+
+    @safeLoad
+    def __add__(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]) -&gt; None:
+        if isinstance(other, Rota):
+            self._personnel = {**self._personnel, **other._personnel}
+        elif isinstance(other, Personnel):
+            if other.id not in self.personnel:
+                self._personnel.update({other.id: other})
+        elif isinstance(other, list):
+            err = []
+            for i in other:
+                try:
+                    self + i
+                except TypeError:
+                    if type(i) not in err:
+                        err.append(type(i))
+            if err:
+                print(f&#34;{&#39;, &#39;.join(err)} cannot be operated on &lt;Rota&gt;&#34;)
+        else:
+            raise TypeError(f&#34;{type(other)} cannot be operated on &lt;Rota&gt;&#34;)
+
+    @safeLoad
+    def __sub__(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]) -&gt; None:
+        if isinstance(other, Rota):
+            self._personnel = list(set(self.personnel) - set(other.personnel))
+        elif isinstance(other, Personnel):
+            if other.id in self.personnel:
+                self._personnel.pop(list(self.personnel).index(other.id))
+        elif isinstance(other, list):
+            err = []
+            for i in other:
+                try:
+                    self - i
+                except TypeError:
+                    if type(i) not in err:
+                        err.append(type(i))
+            if err:
+                print(f&#34;{&#39;, &#39;.join(err)} cannot be operated on &lt;Rota&gt;&#34;)
+        else:
+            raise TypeError(f&#34;{type(other)} cannot be operated on &lt;Rota&gt;&#34;)
+
+    def add(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]):
+        &#34;&#34;&#34;
+        Adds Personnel to the Rota.
+
+        Args:
+            other (list, Personnel, Rota): A list of Personnel, a Personnel, or a Rota to add to the Rota.
+
+        Raises:
+            TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
+        &#34;&#34;&#34;
+        self + other
+
+    def sub(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]):
+        &#34;&#34;&#34;
+        Removes Personnel from the Rota.
+
+        Args:
+            other (list, Personnel): A list of Personnel, a Personnel, or a subset of a Rota to remove from the Rota.
+
+        Raise:
+            TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
+        &#34;&#34;&#34;
+        self - other
+
+    def __len__(self) -&gt; int:
+        return len(self.personnel)
+
+    def __repr__(self):
+        return f&#34;Rota {self.rota}&#34;
+
+    def __str__(self):
+        return f&#34;ROTA       : {self.rota}\n&#34; \
+               f&#34;PERSONNEL  : {len(self)}\n&#34;
+
+    def addRole(self, person: Union[Personnel, str], constraint: Union[Dict[Vehicle, bool], Vehicle] = None,
+                rule: bool = None) -&gt; None:
+        &#34;&#34;&#34;&#34;&#34;&#34;
+        if isinstance(person, Personnel) and person.id in self.personnel:
+            person.constraint(constraint, rule)
+        elif isinstance(person, str) and person in self.personnel:
+            person = self.personnel[person]
+            person.constraint(constraint, rule)
+        else:
+            print(f&#34;{person} does not exist&#34;)
+
+    def _save(self, fileName: str = None, rootDir: str = None) -&gt; None:
+        if fileName:
+            self._fileName = fileName
+        file = os.path.splitext(self._fileName)[0] + &#34;.rt&#34;
+        if rootDir:
+            self._rootDir = rootDir
+        with open(os.path.abspath(os.path.expanduser(os.path.join(self._rootDir, file))), &#39;wb&#39;) as f:
+            pickle.dump(self(), f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def _load(self) -&gt; None:
+        file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + &#34;.rt&#34;
+        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
+            print(&#34;File does not exist. Creating new rota.&#34;)
+            self._save()  # Creates data file
+        else:
+            with open(os.path.abspath(os.path.expanduser(file)), &#39;rb&#39;) as f:
+                data = pickle.load(f)
+            self.rota, self._personnel = data[&#39;rota&#39;], data[&#39;personnel&#39;]</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rtt.library.Rota.personnel"><code class="name">var <span class="ident">personnel</span> : Dict[str, <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def personnel(self) -&gt; Dict[str, Personnel]:
+    return {i.id: i for i in self._personnel}</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="rtt.library.Rota.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, other: Union[_ForwardRef('<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>'), <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, List[Union[_ForwardRef('<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>'), <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>]]])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds Personnel to the Rota.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>other</code></strong> :&ensp;<code>list, <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a></code></dt>
+<dd>A list of Personnel, a Personnel, or a Rota to add to the Rota.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If the item(s) being added to the Rota is/are not Personnel or Rota.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]):
+    &#34;&#34;&#34;
+    Adds Personnel to the Rota.
+
+    Args:
+        other (list, Personnel, Rota): A list of Personnel, a Personnel, or a Rota to add to the Rota.
+
+    Raises:
+        TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
+    &#34;&#34;&#34;
+    self + other</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Rota.addRole"><code class="name flex">
+<span>def <span class="ident">addRole</span></span>(<span>self, person: Union[<a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, str], constraint: Union[Dict[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, bool], <a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>] = None, rule: bool = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addRole(self, person: Union[Personnel, str], constraint: Union[Dict[Vehicle, bool], Vehicle] = None,
+            rule: bool = None) -&gt; None:
+    &#34;&#34;&#34;&#34;&#34;&#34;
+    if isinstance(person, Personnel) and person.id in self.personnel:
+        person.constraint(constraint, rule)
+    elif isinstance(person, str) and person in self.personnel:
+        person = self.personnel[person]
+        person.constraint(constraint, rule)
+    else:
+        print(f&#34;{person} does not exist&#34;)</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Rota.sub"><code class="name flex">
+<span>def <span class="ident">sub</span></span>(<span>self, other: Union[_ForwardRef('<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>'), <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, List[Union[_ForwardRef('<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>'), <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>]]])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes Personnel from the Rota.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>other</code></strong> :&ensp;<code>list, <a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a></code></dt>
+<dd>A list of Personnel, a Personnel, or a subset of a Rota to remove from the Rota.</dd>
+</dl>
+<h2 id="raise">Raise</h2>
+<p>TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sub(self, other: Union[&#34;Rota&#34;, Personnel, List[Union[&#34;Rota&#34;, Personnel]]]):
+    &#34;&#34;&#34;
+    Removes Personnel from the Rota.
+
+    Args:
+        other (list, Personnel): A list of Personnel, a Personnel, or a subset of a Rota to remove from the Rota.
+
+    Raise:
+        TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
+    &#34;&#34;&#34;
+    self - other</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="rtt.library.Station"><code class="flex name class">
+<span>class <span class="ident">Station</span></span>
+<span>(</span><span>name: str, fileName: str = None, rootDir: str = '.')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a Station. The assets of the Station are Roles, Appliances, Vehicles, and Rotas. The data structure of the
+Station is a dictionary of the assets and their unique IDs as keys.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt>roles (dict[str: Role]):
+Dictionary of the Roles present in the Station.</dt>
+<dt>appliances (dict[str: Appliance]): Dictionary of the Appliances present in the Station.</dt>
+<dt>vehicles (dict[str: Vehicle]):
+Dictionary of the Vehicles present in the Station.</dt>
+<dt>rotas (dict[str: Rota]):
+Dictionary of the Rotas present in the Station.</dt>
+<dt><strong><code>active</code></strong> :&ensp;<code>list</code></dt>
+<dd>
+<pre><code>            List of all the Vehicles that are on run in the Station.
+</code></pre>
+</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>
+<pre><code>              Dictionary of all the assets in the Station.
+</code></pre>
+</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<p>Name of the Station.</p>
+</dd>
+<dt><strong><code>fileName</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the save file. If not specified, the file name will be the same as <code>name</code>.</dd>
+<dt><strong><code>rootDir</code></strong> :&ensp;<code>dir</code></dt>
+<dd>Directory where the sve file is located. If not specified, the directory will be set to be
+the current working directory.</dd>
+</dl>
+<p>The file will be saved with the *.stn extension.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Station(object):
+    &#34;&#34;&#34;
+    Creates a Station. The assets of the Station are Roles, Appliances, Vehicles, and Rotas. The data structure of the
+    Station is a dictionary of the assets and their unique IDs as keys.
+
+    Attributes:
+        roles (dict[str: Role]):           Dictionary of the Roles present in the Station.
+        appliances (dict[str: Appliance]): Dictionary of the Appliances present in the Station.
+        vehicles (dict[str: Vehicle]):     Dictionary of the Vehicles present in the Station.
+        rotas (dict[str: Rota]):           Dictionary of the Rotas present in the Station.
+        active (list):                     List of all the Vehicles that are on run in the Station.
+        data (dict):                       Dictionary of all the assets in the Station.
+    &#34;&#34;&#34;
+    _assets = Union[Role, Appliance, Vehicle, Rota]
+
+    def __init__(self, name: str, fileName: str = None, rootDir: str = &#39;.&#39;):
+        &#34;&#34;&#34;
+        Args:
+            name (str):     Name of the Station.
+            fileName (str): Name of the save file. If not specified, the file name will be the same as `name`.
+            rootDir (dir):  Directory where the sve file is located. If not specified, the directory will be set to be
+                            the current working directory.
+
+        The file will be saved with the *.stn extension.
+        &#34;&#34;&#34;
+        self.name, self._fileName, self._rootDir = name, fileName, rootDir
+        self._roles = self._appliances = self._vehicles = self._rotas = {}
+        if not self._fileName:
+            self._fileName = self.name
+
+    @property
+    def roles(self) -&gt; Dict[str, Role]:
+        return self._roles
+
+    @property
+    def appliances(self) -&gt; Dict[str, Appliance]:
+        return self._appliances
+
+    @property
+    def vehicles(self) -&gt; Dict[str, Vehicle]:
+        return self._vehicles
+
+    @property
+    def rotas(self) -&gt; Dict[Union[str, int], Rota]:
+        return self._rotas
+
+    @property
+    def active(self) -&gt; List[Vehicle]:
+        return [i for i in self.vehicles.values() if i.active]
+
+    @property
+    def data(self) -&gt; Dict[Union[str, int], Union[str, Role, Appliance, Vehicle, Rota]]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        :return:
+        &#34;&#34;&#34;
+        return {**self.roles, **self.appliances, **self.vehicles, **self.rotas}
+
+    def __call__(self, arg: Union[str, int, _assets]) -&gt; Union[_assets, dict]:
+        &#34;&#34;&#34;
+        Returns:
+             The Station asset or the dictionary of assets.
+
+        Raises:
+            KeyError: If asset identifier or asset does not exist in the Station.
+        &#34;&#34;&#34;
+        if arg:
+            return self.data[arg]
+        else:
+            return self.data
+
+    def _addAsset(self, arg1: Union[_assets, str, int, List[_assets]], Asset: Type[_assets],
+                  assetDict: Dict[str, _assets], assetIdentifier: str, **kwargs) \
+            -&gt; Union[_assets, List[_assets]]:
+        &#34;&#34;&#34;
+        General Asset generation method. The Assets can be any from Role, Appliance, Vehicle, or Rota.
+
+        Args:
+            arg1 (Asset, str, list): The Asset to add.
+
+                (Asset): Adds an existing Asset to the Station.
+
+                (str):   Name/Callsign/Rota of the Asset.
+
+                (list):  List of Assets to add to the Station.
+
+            Asset (class):           Asset to generate.
+            assetDict (dict):        Dictionary containing the Assets of the Station.
+            assetIdentifier (str):   Unique identifier of the Asset.
+            kwargs:                  Remaining arguments required to create the Asset.
+
+        Returns:
+            Asset
+
+        Raises:
+            TypeError: If kwargs are of the incorrect types
+        &#34;&#34;&#34;
+        if isinstance(arg1, Asset) and arg1.__getattribute__(assetIdentifier) in assetDict:
+            return assetDict[arg1.__getattribute__(assetIdentifier)]
+        elif isinstance(arg1, str) and arg1 in assetDict:
+            return assetDict[arg1]
+        elif isinstance(arg1, list):
+            data = []
+            data.extend(Asset for i in arg1 if isinstance(i, Asset))
+            print(f&#34;{&#39;, &#39;.join([str(i) for i in arg1 if arg1 is not isinstance(i, Asset)])}&#34;)
+            return data
+        else:  # Tries to create the asset using the arguments
+            asset = Asset(arg1, **kwargs)
+            self._load()
+            identifier = asset.__getattribute__(assetIdentifier)
+
+            if identifier in self.data and identifier not in assetDict:
+                raise TypeError(f&#34;{arg1} has already been declared as a &lt;{self.data[identifier]}&gt;&#34;)
+
+            if identifier not in assetDict:
+                assetDict.update({identifier: asset})
+                self._save()
+                return asset
+            else:
+                return assetDict[identifier]
+
+    def role(self, name: Union[Role, str, List[Role]],
+             constraint: Union[Vehicle, dict, List[Vehicle]] = None, rule: bool = False, inherit: Role = None) \
+            -&gt; Union[Role, List[Role]]:
+        &#34;&#34;&#34;
+        Creates and adds a Role as a Station asset.
+
+        Args:
+            name (str, Role, list):           The Role to add to the Station.
+
+                (Role):     Adds an existing Role to the Station.
+
+                (str):      Name of the Role to be created.
+
+                (list):     List of Roles to add to the Station.
+
+            constraint (dict, list, Vehicle): Constraints of this Role.
+
+                (dict):     Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+                (list):     Adds the list of Vehicles to this Role&#39;s constraints.
+
+                (Vehicle):  Adds the Vehicle to this Role&#39;s constraints.
+
+            rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+            inherit (Role):                   Inherits the constraints of this Role.
+
+        Returns:
+            Role(s) added to the station
+
+        Raises:
+            TypeError: If arguments are of the incorrect types.
+        &#34;&#34;&#34;
+        return self._addAsset(name, Role, self.roles, &#39;role&#39;,
+                              constraint=constraint, rule=rule, inherit=inherit)
+
+    def appliance(self, name: Union[Appliance, str, List[Appliance]],
+                  crew: Dict[Vehicle, int] = None, minimum: int = 1, maximum: int = 1) \
+            -&gt; Union[Appliance, List[Appliance]]:
+        &#34;&#34;&#34;
+        Creates and adds an Appliance as a Station asset.
+
+        Args:
+            name (Appliance, str, list): The Appliance to add to the Station.
+
+                (Appliance): Adds an existing Appliance to the Station.
+
+                (str):       Name of the Appliance to be created.
+
+                (list):      List of Appliances to be added to the Station.
+
+            crew (dict):                 Crew allowed on the Appliance.
+            minimum (int):               Minimum number of Personnel required on the Appliance.
+            maximum (int):               Maximum number of Personnel allowed on the Appliance.
+
+        Returns:
+            Appliance(s) added to the Station.
+
+        Raises:
+            TypeError:  If arguments are of the incorrect types.
+            ValueError: Crew not added or maximum is more than minimum.
+        &#34;&#34;&#34;
+        return self._addAsset(name, Appliance, self.appliances, &#39;appliance&#39;,
+                              crew=crew, minimum=minimum, maximum=maximum)
+
+    def vehicle(self, callsign: Union[Vehicle, str, List[Vehicle]],
+                appliance: Appliance = None, plateNumber: str = None, active: bool = True)\
+            -&gt; Union[Vehicle, List[Vehicle]]:
+        &#34;&#34;&#34;
+        Args:
+            callsign (Vehicle, str, list): The Vehicle to add to the Station.
+
+                (Vehicle): Adds an existing Vehicle to the Station.
+
+                (str):     Unique callsign of the Vehicle to be created.
+
+                (list):    List of Vehicles to add to the Station.
+
+            appliance (Appliance):         Appliance of the Vehicle.
+            plateNumber (str):             Unique plate number of the Vehicle.
+            active (bool):                 Run state of the Vehicle.
+
+        Raises:
+            TypeError: If arguments are of the incorrect type.
+        &#34;&#34;&#34;
+        return self._addAsset(callsign, Vehicle, self.vehicles, &#39;callsign&#39;,
+                              appliance=appliance, plateNumber=plateNumber, active=active)
+
+    def rota(self, rota: Union[Rota, int, str, List[Rota]], fileName: str = None, rootDir: str = &#39;.&#39;) \
+            -&gt; Union[Rota, List[Rota]]:
+        &#34;&#34;&#34;
+        Args:
+            rota (Rota, int, list): The Rota to add to the Station:
+
+                (Rota):     Adds an existing Rota to the Station.
+
+                (int, str): The number or name of the Rota to be created.
+
+                (list):     List of Rotas to add to the Station.
+
+            fileName (str):         Name of the save file. If not specified, the default file name will be set to
+                                    &#34;Rota `rota`&#34;.
+            rootDir (str):          Directory where the sve file is located. If not specified, the directory will be set
+                                    to be the current working directory.
+
+        The file will be saved with the *.rt extension.
+        &#34;&#34;&#34;
+        return self._addAsset(rota, Rota, self.rotas, &#39;rota&#39;,
+                              fileName=fileName, rootDir=rootDir)
+
+    def personnel(self, rota: Union[Rota, int, List[Union[Rota, int]]],
+                  name: Union[Personnel, str, List[Union[Personnel, str]]], role: Role = None) \
+            -&gt; Union[Personnel, List[Personnel]]:
+        &#34;&#34;&#34;
+        Creates and adds Personnel to a specific Rota.
+
+        Args:
+            rota (Rota, int, list):      Rota(s) to add Personnel to.
+            name (Personnel, str, list): (List of) Personnel to create and add to the specified Rota.
+
+                (Personnel): Adds existing Personnel to the Rota(s).
+
+                (str):       Name of the Personnel to be created.
+
+                (list):      List of Personnel to add to the Rota(s)
+
+            role (Role):                 Role of Personnel to create.
+
+        Returns:
+            Personnel that has been added to the Rota
+        &#34;&#34;&#34;
+        if not isinstance(rota, (Rota, int, list)):
+            raise TypeError(&#34;&lt;Personnel&gt; can be added only to a &lt;Rota&gt;&#34;)
+        elif isinstance(rota, Rota):
+            if rota.rota not in self.rotas:
+                raise KeyError(f&#34;Rota {rota.rota} is not in the Station&#34;)
+            rota = [self(rota.rota)]
+        elif isinstance(rota, int):
+            if rota in self.rotas:
+                raise KeyError(f&#34;Rota {rota} is not in the Station&#34;)
+            rota = [self(rota)]
+        elif isinstance(rota, list):
+            if not (all(isinstance(i, Rota) for i in rota) or all(isinstance(i, int) for i in rota)):
+                raise TypeError(f&#34;{&#39;, &#39;.join([i for i in rota if not isinstance(i, Rota)])} is/are not &lt;Rota&gt;&#34;)
+            if all(isinstance(i, int) for i in rota):
+                rota = [self(i) for i in rota]
+            pass
+        else:
+            raise TypeError(&#34;&lt;Personnel&gt; can be added only to a &lt;Rota&gt;&#34;)
+
+        result = errs = []
+        for r in rota:
+            try:
+                if isinstance(name, Personnel):
+                    r + name
+                    result.append(name)
+                elif isinstance(name, str):
+                    if not (role or isinstance(role, Role)):
+                        raise TypeError
+                    p = Personnel(name, role)
+                    r + p
+                    result.append(p)
+                elif isinstance(name, list):
+                    [self.personnel(r, i, role) for i in name]
+                else:
+                    raise NameError(f&#34;{str(name)}&#34;)
+            except NameError as err:
+                errs.append(err.args[0])
+            except TypeError:
+                raise TypeError(&#34;A &lt;Role&gt; has to be specified&#34;)
+
+        if errs:
+            print(f&#34;{&#39;, &#39;.join([str(i) for i in errs])} has/have to be &lt;Personnel&gt; to be added to &lt;Rota&gt;.&#34;)
+
+        return result if len(result) &gt; 0 else result[0]
+
+    def __add__(self, other: Union[_assets, List[_assets]]) -&gt; Union[_assets, List[_assets]]:
+        if isinstance(other, Rota):
+            return self.rota(other)
+        elif isinstance(other, Role):
+            return self.role(other)
+        elif isinstance(other, Appliance):
+            return self.appliance(other)
+        elif isinstance(other, Vehicle):
+            return self.vehicle(other)
+        elif isinstance(other, list):
+            return [self + i for i in other]
+        else:
+            raise TypeError(f&#34;{type(other)} cannot be operated on &lt;Station&gt;&#34;)
+
+    def __sub__(self, other: Union[str, _assets, List[Union[str, _assets]]]) -&gt; None:
+        if isinstance(other, Rota):
+            self._rotas.pop(other.rota, None)
+        elif isinstance(other, Role):
+            self._roles.pop(other.role, None)
+        elif isinstance(other, Appliance):
+            self._appliances.pop(other.appliance, None)
+        elif isinstance(other, Vehicle):
+            self._vehicles.pop(other.callsign, None)
+        elif isinstance(other, str):
+            if other not in self.data:
+                raise KeyError(f&#34;{other} is not a Station asset&#34;)
+            other = self.data[other]
+            self - other
+        elif isinstance(other, list):
+            errk = errt = errs = []
+            for i in other:
+                try:
+                    self - i
+                except KeyError as err:
+                    errk.append(err.args[0].split(&#39; is not a &#39;)[0])
+                except TypeError as err:
+                    errt.append(err.args[0].split(&#39; has to be&#39;)[0])
+            if errk:
+                errs.append(f&#34;{&#39;, &#39;.join([i for i in errk])} is/are not Station asset(s).&#34;)
+            if errt:
+                errs.append(f&#34;{&#39;, &#39;.join([i for i in errt])} has/have to be &lt;Role&gt;, &lt;Appliance&gt;, &lt;Vehicle&gt;, or &lt;Rota&gt;.&#34;)
+            if errs:
+                raise TypeError(&#39; &#39;.join(errs))
+        else:
+            raise TypeError(f&#34;{other} has to be a &lt;Role&gt;, &lt;Appliance&gt;, &lt;Vehicle&gt;, or &lt;Rota&gt;&#34;)
+
+    def add(self, other: Union[_assets, List[_assets]]) -&gt; Union[_assets, List[_assets]]:
+        &#34;&#34;&#34;
+        Adds an asset or a list of assets to the Station.
+
+        Args:
+            other (Role, Appliance, Vehicle, Rota, list): The asset or list of assets to add to the Station.
+
+        Return:
+            The asset added to the Station.
+        &#34;&#34;&#34;
+        return self + other
+
+    def remove(self, other: Union[str, _assets, List[Union[str, _assets]]]) -&gt; None:
+        &#34;&#34;&#34;
+        Removes an asset or a list of assets from the Station.
+
+        Args:
+            other (Role, Appliance, Vehicle, Rota, list): The asset or list of assets to remove from the Station.
+        &#34;&#34;&#34;
+        self - other
+
+    def activate(self, vehicle: Union[Vehicle, str, List[Union[Vehicle, str]]], active: bool = True) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active status of a Vehicle asset from the Station.
+
+        Args:
+            vehicle (Vehicle, str, list): Changes the active status the Vehicle(s).
+            active (bool):                Active -&gt; True; Not active -&gt; False.
+        &#34;&#34;&#34;
+        if isinstance(vehicle, Vehicle):
+            self.add(vehicle)
+            vehicle.active = active
+        elif isinstance(vehicle, str):
+            if vehicle in self.vehicles:
+                self.vehicles[vehicle].active = active
+            else:
+                raise NameError(f&#34;{vehicle} is not a &lt;Vehicle&gt;&#34;)
+        elif isinstance(vehicle, list):
+            for v in vehicle:
+                self.activate(v, active)
+        else:
+            raise NameError(f&#34;{vehicle} is not a &lt;Vehicle&gt;&#34;)
+
+    def deactivate(self, vehicle: Union[Vehicle, str, List[Union[Vehicle, str]]]) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active status of a Vehicle asset from the Station to False.
+
+        Args:
+            vehicle (Vehicle, str, list): Changes the active status the Vehicle(s) to False.
+        &#34;&#34;&#34;
+        self.activate(vehicle, False)
+
+    def offRun(self) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active status of all the Vehicle assets from the Station to False.
+        &#34;&#34;&#34;
+        [self.deactivate(i) for i in self.vehicles]
+
+    def _save(self, fileName: str = None, rootDir: str = None) -&gt; None:
+        &#34;&#34;&#34;
+        Saves Station data on disk.
+
+        Args:
+            fileName (str): Name of the save file. If not specified, the default file name will be used.
+            rootDir (dir):  Directory where the sve file is located. If not specified, the default directory will
+                            be used.
+        &#34;&#34;&#34;
+        if fileName:
+            self._fileName = fileName
+        file = os.path.splitext(self._fileName)[0] + &#34;.stn&#34;
+        if rootDir:
+            self._rootDir = rootDir
+        with open(os.path.abspath(os.path.expanduser(os.path.join(self._rootDir, file))), &#39;wb&#39;) as f:
+            data = (self.roles, self.appliances, self.vehicles, self.rotas)
+            pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def _load(self) -&gt; None:
+        &#34;&#34;&#34;
+        Loads Station data from disk if it exists or creates a new one if it does not.
+        &#34;&#34;&#34;
+        file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + &#34;.stn&#34;
+        if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
+            print(&#34;File does not exist. Creating new rota.&#34;)
+            self._save()  # Creates data file
+        else:
+            with open(os.path.abspath(os.path.expanduser(file)), &#39;rb&#39;) as f:
+                data = pickle.load(f)
+            self._roles, self._appliances, self._rotas = data</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rtt.library.Station.active"><code class="name">var <span class="ident">active</span> : List[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def active(self) -&gt; List[Vehicle]:
+    return [i for i in self.vehicles.values() if i.active]</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.appliances"><code class="name">var <span class="ident">appliances</span> : Dict[str, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def appliances(self) -&gt; Dict[str, Appliance]:
+    return self._appliances</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.data"><code class="name">var <span class="ident">data</span> : Dict[Union[str, int], Union[str, <a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]]</code></dt>
+<dd>
+<div class="desc"><p>Returns human-readable data.
+:return:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def data(self) -&gt; Dict[Union[str, int], Union[str, Role, Appliance, Vehicle, Rota]]:
+    &#34;&#34;&#34;
+    Returns human-readable data.
+    :return:
+    &#34;&#34;&#34;
+    return {**self.roles, **self.appliances, **self.vehicles, **self.rotas}</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.roles"><code class="name">var <span class="ident">roles</span> : Dict[str, <a title="rtt.library.Role" href="#rtt.library.Role">Role</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def roles(self) -&gt; Dict[str, Role]:
+    return self._roles</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.rotas"><code class="name">var <span class="ident">rotas</span> : Dict[Union[str, int], <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def rotas(self) -&gt; Dict[Union[str, int], Rota]:
+    return self._rotas</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.vehicles"><code class="name">var <span class="ident">vehicles</span> : Dict[str, <a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def vehicles(self) -&gt; Dict[str, Vehicle]:
+    return self._vehicles</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="rtt.library.Station.activate"><code class="name flex">
+<span>def <span class="ident">activate</span></span>(<span>self, vehicle: Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str, List[Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str]]], active: bool = True) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Changes the active status of a Vehicle asset from the Station.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>vehicle</code></strong> :&ensp;<code><a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str, list</code></dt>
+<dd>Changes the active status the Vehicle(s).</dd>
+<dt><strong><code>active</code></strong> :&ensp;<code>bool</code></dt>
+<dd>
+<pre><code>       Active -&gt; True; Not active -&gt; False.
+</code></pre>
+</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate(self, vehicle: Union[Vehicle, str, List[Union[Vehicle, str]]], active: bool = True) -&gt; None:
+    &#34;&#34;&#34;
+    Changes the active status of a Vehicle asset from the Station.
+
+    Args:
+        vehicle (Vehicle, str, list): Changes the active status the Vehicle(s).
+        active (bool):                Active -&gt; True; Not active -&gt; False.
+    &#34;&#34;&#34;
+    if isinstance(vehicle, Vehicle):
+        self.add(vehicle)
+        vehicle.active = active
+    elif isinstance(vehicle, str):
+        if vehicle in self.vehicles:
+            self.vehicles[vehicle].active = active
+        else:
+            raise NameError(f&#34;{vehicle} is not a &lt;Vehicle&gt;&#34;)
+    elif isinstance(vehicle, list):
+        for v in vehicle:
+            self.activate(v, active)
+    else:
+        raise NameError(f&#34;{vehicle} is not a &lt;Vehicle&gt;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, other: Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, List[Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]]]) ‑> Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, List[Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds an asset or a list of assets to the Station.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>other</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, list</code></dt>
+<dd>The asset or list of assets to add to the Station.</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>The asset added to the Station.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, other: Union[_assets, List[_assets]]) -&gt; Union[_assets, List[_assets]]:
+    &#34;&#34;&#34;
+    Adds an asset or a list of assets to the Station.
+
+    Args:
+        other (Role, Appliance, Vehicle, Rota, list): The asset or list of assets to add to the Station.
+
+    Return:
+        The asset added to the Station.
+    &#34;&#34;&#34;
+    return self + other</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.appliance"><code class="name flex">
+<span>def <span class="ident">appliance</span></span>(<span>self, name: Union[<a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, str, List[<a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>]], crew: Dict[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, int] = None, minimum: int = 1, maximum: int = 1) ‑> Union[<a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, List[<a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates and adds an Appliance as a Station asset.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code><a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, str, list</code></dt>
+<dd>
+<p>The Appliance to add to the Station.</p>
+<p>(Appliance): Adds an existing Appliance to the Station.</p>
+<p>(str):
+Name of the Appliance to be created.</p>
+<p>(list):
+List of Appliances to be added to the Station.</p>
+</dd>
+<dt><strong><code>crew</code></strong> :&ensp;<code>dict</code></dt>
+<dd>
+<pre><code>        Crew allowed on the Appliance.
+</code></pre>
+</dd>
+<dt><strong><code>minimum</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<pre><code>      Minimum number of Personnel required on the Appliance.
+</code></pre>
+</dd>
+<dt><strong><code>maximum</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<pre><code>      Maximum number of Personnel allowed on the Appliance.
+</code></pre>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Appliance(s) added to the Station.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If arguments are of the incorrect types.</dd>
+<dt><code>ValueError</code></dt>
+<dd>Crew not added or maximum is more than minimum.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def appliance(self, name: Union[Appliance, str, List[Appliance]],
+              crew: Dict[Vehicle, int] = None, minimum: int = 1, maximum: int = 1) \
+        -&gt; Union[Appliance, List[Appliance]]:
+    &#34;&#34;&#34;
+    Creates and adds an Appliance as a Station asset.
+
+    Args:
+        name (Appliance, str, list): The Appliance to add to the Station.
+
+            (Appliance): Adds an existing Appliance to the Station.
+
+            (str):       Name of the Appliance to be created.
+
+            (list):      List of Appliances to be added to the Station.
+
+        crew (dict):                 Crew allowed on the Appliance.
+        minimum (int):               Minimum number of Personnel required on the Appliance.
+        maximum (int):               Maximum number of Personnel allowed on the Appliance.
+
+    Returns:
+        Appliance(s) added to the Station.
+
+    Raises:
+        TypeError:  If arguments are of the incorrect types.
+        ValueError: Crew not added or maximum is more than minimum.
+    &#34;&#34;&#34;
+    return self._addAsset(name, Appliance, self.appliances, &#39;appliance&#39;,
+                          crew=crew, minimum=minimum, maximum=maximum)</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.deactivate"><code class="name flex">
+<span>def <span class="ident">deactivate</span></span>(<span>self, vehicle: Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str, List[Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str]]]) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Changes the active status of a Vehicle asset from the Station to False.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>vehicle</code></strong> :&ensp;<code><a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str, list</code></dt>
+<dd>Changes the active status the Vehicle(s) to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deactivate(self, vehicle: Union[Vehicle, str, List[Union[Vehicle, str]]]) -&gt; None:
+    &#34;&#34;&#34;
+    Changes the active status of a Vehicle asset from the Station to False.
+
+    Args:
+        vehicle (Vehicle, str, list): Changes the active status the Vehicle(s) to False.
+    &#34;&#34;&#34;
+    self.activate(vehicle, False)</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.offRun"><code class="name flex">
+<span>def <span class="ident">offRun</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Changes the active status of all the Vehicle assets from the Station to False.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def offRun(self) -&gt; None:
+    &#34;&#34;&#34;
+    Changes the active status of all the Vehicle assets from the Station to False.
+    &#34;&#34;&#34;
+    [self.deactivate(i) for i in self.vehicles]</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.personnel"><code class="name flex">
+<span>def <span class="ident">personnel</span></span>(<span>self, rota: Union[<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, int, List[Union[<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, int]]], name: Union[<a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, str, List[Union[<a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, str]]], role: <a title="rtt.library.Role" href="#rtt.library.Role">Role</a> = None) ‑> Union[<a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, List[<a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates and adds Personnel to a specific Rota.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>rota</code></strong> :&ensp;<code><a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, int, list</code></dt>
+<dd>
+<p>Rota(s) to add Personnel to.</p>
+</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code><a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a>, str, list</code></dt>
+<dd>
+<p>(List of) Personnel to create and add to the specified Rota.</p>
+<p>(Personnel): Adds existing Personnel to the Rota(s).</p>
+<p>(str):
+Name of the Personnel to be created.</p>
+<p>(list):
+List of Personnel to add to the Rota(s)</p>
+</dd>
+<dt><strong><code>role</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></code></dt>
+<dd>
+<pre><code>        Role of Personnel to create.
+</code></pre>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Personnel that has been added to the Rota</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def personnel(self, rota: Union[Rota, int, List[Union[Rota, int]]],
+              name: Union[Personnel, str, List[Union[Personnel, str]]], role: Role = None) \
+        -&gt; Union[Personnel, List[Personnel]]:
+    &#34;&#34;&#34;
+    Creates and adds Personnel to a specific Rota.
+
+    Args:
+        rota (Rota, int, list):      Rota(s) to add Personnel to.
+        name (Personnel, str, list): (List of) Personnel to create and add to the specified Rota.
+
+            (Personnel): Adds existing Personnel to the Rota(s).
+
+            (str):       Name of the Personnel to be created.
+
+            (list):      List of Personnel to add to the Rota(s)
+
+        role (Role):                 Role of Personnel to create.
+
+    Returns:
+        Personnel that has been added to the Rota
+    &#34;&#34;&#34;
+    if not isinstance(rota, (Rota, int, list)):
+        raise TypeError(&#34;&lt;Personnel&gt; can be added only to a &lt;Rota&gt;&#34;)
+    elif isinstance(rota, Rota):
+        if rota.rota not in self.rotas:
+            raise KeyError(f&#34;Rota {rota.rota} is not in the Station&#34;)
+        rota = [self(rota.rota)]
+    elif isinstance(rota, int):
+        if rota in self.rotas:
+            raise KeyError(f&#34;Rota {rota} is not in the Station&#34;)
+        rota = [self(rota)]
+    elif isinstance(rota, list):
+        if not (all(isinstance(i, Rota) for i in rota) or all(isinstance(i, int) for i in rota)):
+            raise TypeError(f&#34;{&#39;, &#39;.join([i for i in rota if not isinstance(i, Rota)])} is/are not &lt;Rota&gt;&#34;)
+        if all(isinstance(i, int) for i in rota):
+            rota = [self(i) for i in rota]
+        pass
+    else:
+        raise TypeError(&#34;&lt;Personnel&gt; can be added only to a &lt;Rota&gt;&#34;)
+
+    result = errs = []
+    for r in rota:
+        try:
+            if isinstance(name, Personnel):
+                r + name
+                result.append(name)
+            elif isinstance(name, str):
+                if not (role or isinstance(role, Role)):
+                    raise TypeError
+                p = Personnel(name, role)
+                r + p
+                result.append(p)
+            elif isinstance(name, list):
+                [self.personnel(r, i, role) for i in name]
+            else:
+                raise NameError(f&#34;{str(name)}&#34;)
+        except NameError as err:
+            errs.append(err.args[0])
+        except TypeError:
+            raise TypeError(&#34;A &lt;Role&gt; has to be specified&#34;)
+
+    if errs:
+        print(f&#34;{&#39;, &#39;.join([str(i) for i in errs])} has/have to be &lt;Personnel&gt; to be added to &lt;Rota&gt;.&#34;)
+
+    return result if len(result) &gt; 0 else result[0]</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self, other: Union[str, <a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, List[Union[str, <a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]]]) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes an asset or a list of assets from the Station.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>other</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, <a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, <a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, list</code></dt>
+<dd>The asset or list of assets to remove from the Station.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self, other: Union[str, _assets, List[Union[str, _assets]]]) -&gt; None:
+    &#34;&#34;&#34;
+    Removes an asset or a list of assets from the Station.
+
+    Args:
+        other (Role, Appliance, Vehicle, Rota, list): The asset or list of assets to remove from the Station.
+    &#34;&#34;&#34;
+    self - other</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.role"><code class="name flex">
+<span>def <span class="ident">role</span></span>(<span>self, name: Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, str, List[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>]], constraint: Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, dict, List[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>]] = None, rule: bool = False, inherit: <a title="rtt.library.Role" href="#rtt.library.Role">Role</a> = None) ‑> Union[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, List[<a title="rtt.library.Role" href="#rtt.library.Role">Role</a>]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates and adds a Role as a Station asset.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str, <a title="rtt.library.Role" href="#rtt.library.Role">Role</a>, list</code></dt>
+<dd>
+<pre><code>  The Role to add to the Station.
+</code></pre>
+<p>(Role):
+Adds an existing Role to the Station.</p>
+<p>(str):
+Name of the Role to be created.</p>
+<p>(list):
+List of Roles to add to the Station.</p>
+</dd>
+<dt><strong><code>constraint</code></strong> :&ensp;<code>dict, list, <a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a></code></dt>
+<dd>
+<p>Constraints of this Role.</p>
+<p>(dict):
+Adds the whole dictionary of constraints as this Role's constraints.</p>
+<p>(list):
+Adds the list of Vehicles to this Role's constraints.</p>
+<p>(Vehicle):
+Adds the Vehicle to this Role's constraints.</p>
+</dd>
+<dt><strong><code>rule</code></strong> :&ensp;<code>bool</code></dt>
+<dd>
+<pre><code>             Rule for the constraint(s) if constraint is a list or Vehicle.
+</code></pre>
+</dd>
+<dt><strong><code>inherit</code></strong> :&ensp;<code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></code></dt>
+<dd>
+<pre><code>          Inherits the constraints of this Role.
+</code></pre>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Role(s) added to the station</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If arguments are of the incorrect types.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def role(self, name: Union[Role, str, List[Role]],
+         constraint: Union[Vehicle, dict, List[Vehicle]] = None, rule: bool = False, inherit: Role = None) \
+        -&gt; Union[Role, List[Role]]:
+    &#34;&#34;&#34;
+    Creates and adds a Role as a Station asset.
+
+    Args:
+        name (str, Role, list):           The Role to add to the Station.
+
+            (Role):     Adds an existing Role to the Station.
+
+            (str):      Name of the Role to be created.
+
+            (list):     List of Roles to add to the Station.
+
+        constraint (dict, list, Vehicle): Constraints of this Role.
+
+            (dict):     Adds the whole dictionary of constraints as this Role&#39;s constraints.
+
+            (list):     Adds the list of Vehicles to this Role&#39;s constraints.
+
+            (Vehicle):  Adds the Vehicle to this Role&#39;s constraints.
+
+        rule (bool):                      Rule for the constraint(s) if constraint is a list or Vehicle.
+        inherit (Role):                   Inherits the constraints of this Role.
+
+    Returns:
+        Role(s) added to the station
+
+    Raises:
+        TypeError: If arguments are of the incorrect types.
+    &#34;&#34;&#34;
+    return self._addAsset(name, Role, self.roles, &#39;role&#39;,
+                          constraint=constraint, rule=rule, inherit=inherit)</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.rota"><code class="name flex">
+<span>def <span class="ident">rota</span></span>(<span>self, rota: Union[<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, int, str, List[<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]], fileName: str = None, rootDir: str = '.') ‑> Union[<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, List[<a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>]]</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>rota</code></strong> :&ensp;<code><a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a>, int, list</code></dt>
+<dd>
+<p>The Rota to add to the Station:</p>
+<p>(Rota):
+Adds an existing Rota to the Station.</p>
+<p>(int, str): The number or name of the Rota to be created.</p>
+<p>(list):
+List of Rotas to add to the Station.</p>
+</dd>
+<dt><strong><code>fileName</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>Name of the save file. If not specified, the default file name will be set to
+            "Rota &lt;code&gt;rota&lt;/code&gt;".
+</code></pre>
+</dd>
+<dt><strong><code>rootDir</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code> Directory where the sve file is located. If not specified, the directory will be set
+            to be the current working directory.
+</code></pre>
+</dd>
+</dl>
+<p>The file will be saved with the *.rt extension.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rota(self, rota: Union[Rota, int, str, List[Rota]], fileName: str = None, rootDir: str = &#39;.&#39;) \
+        -&gt; Union[Rota, List[Rota]]:
+    &#34;&#34;&#34;
+    Args:
+        rota (Rota, int, list): The Rota to add to the Station:
+
+            (Rota):     Adds an existing Rota to the Station.
+
+            (int, str): The number or name of the Rota to be created.
+
+            (list):     List of Rotas to add to the Station.
+
+        fileName (str):         Name of the save file. If not specified, the default file name will be set to
+                                &#34;Rota `rota`&#34;.
+        rootDir (str):          Directory where the sve file is located. If not specified, the directory will be set
+                                to be the current working directory.
+
+    The file will be saved with the *.rt extension.
+    &#34;&#34;&#34;
+    return self._addAsset(rota, Rota, self.rotas, &#39;rota&#39;,
+                          fileName=fileName, rootDir=rootDir)</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Station.vehicle"><code class="name flex">
+<span>def <span class="ident">vehicle</span></span>(<span>self, callsign: Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str, List[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>]], appliance: <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a> = None, plateNumber: str = None, active: bool = True) ‑> Union[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, List[<a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>]]</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callsign</code></strong> :&ensp;<code><a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a>, str, list</code></dt>
+<dd>
+<p>The Vehicle to add to the Station.</p>
+<p>(Vehicle): Adds an existing Vehicle to the Station.</p>
+<p>(str):
+Unique callsign of the Vehicle to be created.</p>
+<p>(list):
+List of Vehicles to add to the Station.</p>
+</dd>
+<dt><strong><code>appliance</code></strong> :&ensp;<code><a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a></code></dt>
+<dd>
+<pre><code>Appliance of the Vehicle.
+</code></pre>
+</dd>
+<dt><strong><code>plateNumber</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<pre><code>    Unique plate number of the Vehicle.
+</code></pre>
+</dd>
+<dt><strong><code>active</code></strong> :&ensp;<code>bool</code></dt>
+<dd>
+<pre><code>        Run state of the Vehicle.
+</code></pre>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If arguments are of the incorrect type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def vehicle(self, callsign: Union[Vehicle, str, List[Vehicle]],
+            appliance: Appliance = None, plateNumber: str = None, active: bool = True)\
+        -&gt; Union[Vehicle, List[Vehicle]]:
+    &#34;&#34;&#34;
+    Args:
+        callsign (Vehicle, str, list): The Vehicle to add to the Station.
+
+            (Vehicle): Adds an existing Vehicle to the Station.
+
+            (str):     Unique callsign of the Vehicle to be created.
+
+            (list):    List of Vehicles to add to the Station.
+
+        appliance (Appliance):         Appliance of the Vehicle.
+        plateNumber (str):             Unique plate number of the Vehicle.
+        active (bool):                 Run state of the Vehicle.
+
+    Raises:
+        TypeError: If arguments are of the incorrect type.
+    &#34;&#34;&#34;
+    return self._addAsset(callsign, Vehicle, self.vehicles, &#39;callsign&#39;,
+                          appliance=appliance, plateNumber=plateNumber, active=active)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="rtt.library.Vehicle"><code class="flex name class">
+<span>class <span class="ident">Vehicle</span></span>
+<span>(</span><span>callsign: str, appliance: <a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a>, plateNumber: str, active: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a Vehicle using an existing Appliance.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>callsign</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique callsign of the Vehicle.</dd>
+<dt><strong><code>plate</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique plate number of the Vehicle.</dd>
+<dt><strong><code>active</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Returns True if the Vehicle is on run and False if the Vehicle is off run.</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callsign</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<p>Unique callsign of the Vehicle.</p>
+</dd>
+<dt><strong><code>appliance</code></strong> :&ensp;<code><a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a></code></dt>
+<dd>Appliance of the Vehicle.</dd>
+<dt><strong><code>plateNumber</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<p>Unique plate number of the Vehicle.</p>
+</dd>
+<dt><strong><code>active</code></strong> :&ensp;<code>bool</code></dt>
+<dd>
+<pre><code>Run state of the Vehicle.
+</code></pre>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>If arguments are of the incorrect types.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Vehicle(Appliance):
+    &#34;&#34;&#34;
+    Creates a Vehicle using an existing Appliance.
+
+    Attributes:
+        callsign (str): Unique callsign of the Vehicle.
+        plate (str):    Unique plate number of the Vehicle.
+        active (bool):  Returns True if the Vehicle is on run and False if the Vehicle is off run.
+    &#34;&#34;&#34;
+
+    def __init__(self, callsign: str, appliance: Appliance, plateNumber: str, active: bool = True):
+        &#34;&#34;&#34;
+        Args:
+            callsign (str):        Unique callsign of the Vehicle.
+            appliance (Appliance): Appliance of the Vehicle.
+            plateNumber (str):     Unique plate number of the Vehicle.
+            active (bool):         Run state of the Vehicle.
+
+        Raises:
+            TypeError: If arguments are of the incorrect types.
+        &#34;&#34;&#34;
+        if not isinstance(appliance, Appliance):
+            raise TypeError(f&#34;{appliance} is not an Appliance. Create the Appliance first&#34;)
+        self._callsign, self._plateNumber, self._active = callsign, plateNumber, active
+        super().__init__(appliance.appliance, appliance.crew, *appliance.limits)
+
+    @property
+    def callsign(self) -&gt; str:
+        return self._callsign
+
+    @callsign.setter
+    def callsign(self, newCallsign) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the callsign of the Vehicle.
+        &#34;&#34;&#34;
+        self._callsign = newCallsign
+
+    @property
+    def plate(self) -&gt; str:
+        return self._plateNumber
+
+    @plate.setter
+    def plate(self, newPlate) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the plate number of the Vehicle.
+        &#34;&#34;&#34;
+        self._plateNumber = newPlate
+
+    @property
+    def active(self) -&gt; bool:
+        return self._active
+
+    @active.setter
+    def active(self, val: bool) -&gt; None:
+        &#34;&#34;&#34;
+        Changes the active state of the Vehicle.
+        &#34;&#34;&#34;
+        if not isinstance(val, bool):
+            raise TypeError(&#34;Only &lt;boolean&gt; values are allowed&#34;)
+        self._active = val
+
+    def onRun(self) -&gt; None:
+        &#34;&#34;&#34;
+        Sets active state of the Vehicle to True.
+        &#34;&#34;&#34;
+        self.active = True
+
+    def offRun(self) -&gt; None:
+        &#34;&#34;&#34;
+        Sets active state of the Vehicle to False.
+        &#34;&#34;&#34;
+        self.active = False
+
+    def __repr__(self):
+        return f&#34;{self.callsign} ({self.plate}) -- {&#39;On run&#39; if self.active else &#39;Off run&#39;}&#34;
+
+    def __call__(self) -&gt; Dict[str, Union[str, Dict[Role, int], List[int]]]:
+        &#34;&#34;&#34;
+        Returns human-readable data.
+        &#34;&#34;&#34;
+        return {
+            &#39;callsign&#39;: self.callsign,
+            &#39;appliance&#39;: self.appliance,
+            &#39;crew&#39;: self.crew,
+            &#39;limits&#39;: self.limits
+        }</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="rtt.library.Vehicle.active"><code class="name">var <span class="ident">active</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def active(self) -&gt; bool:
+    return self._active</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Vehicle.callsign"><code class="name">var <span class="ident">callsign</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def callsign(self) -&gt; str:
+    return self._callsign</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Vehicle.plate"><code class="name">var <span class="ident">plate</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def plate(self) -&gt; str:
+    return self._plateNumber</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="rtt.library.Vehicle.offRun"><code class="name flex">
+<span>def <span class="ident">offRun</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets active state of the Vehicle to False.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def offRun(self) -&gt; None:
+    &#34;&#34;&#34;
+    Sets active state of the Vehicle to False.
+    &#34;&#34;&#34;
+    self.active = False</code></pre>
+</details>
+</dd>
+<dt id="rtt.library.Vehicle.onRun"><code class="name flex">
+<span>def <span class="ident">onRun</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets active state of the Vehicle to True.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onRun(self) -&gt; None:
+    &#34;&#34;&#34;
+    Sets active state of the Vehicle to True.
+    &#34;&#34;&#34;
+    self.active = True</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a></b></code>:
+<ul class="hlist">
+<li><code><a title="rtt.library.Appliance.change" href="#rtt.library.Appliance.change">change</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="rtt" href="index.html">rtt</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="rtt.library.safeLoad" href="#rtt.library.safeLoad">safeLoad</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="rtt.library.Appliance" href="#rtt.library.Appliance">Appliance</a></code></h4>
+<ul class="">
+<li><code><a title="rtt.library.Appliance.appliance" href="#rtt.library.Appliance.appliance">appliance</a></code></li>
+<li><code><a title="rtt.library.Appliance.change" href="#rtt.library.Appliance.change">change</a></code></li>
+<li><code><a title="rtt.library.Appliance.crew" href="#rtt.library.Appliance.crew">crew</a></code></li>
+<li><code><a title="rtt.library.Appliance.limits" href="#rtt.library.Appliance.limits">limits</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rtt.library.Personnel" href="#rtt.library.Personnel">Personnel</a></code></h4>
+<ul class="">
+<li><code><a title="rtt.library.Personnel.id" href="#rtt.library.Personnel.id">id</a></code></li>
+<li><code><a title="rtt.library.Personnel.name" href="#rtt.library.Personnel.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rtt.library.Role" href="#rtt.library.Role">Role</a></code></h4>
+<ul class="">
+<li><code><a title="rtt.library.Role.constraint" href="#rtt.library.Role.constraint">constraint</a></code></li>
+<li><code><a title="rtt.library.Role.constraints" href="#rtt.library.Role.constraints">constraints</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rtt.library.Rota" href="#rtt.library.Rota">Rota</a></code></h4>
+<ul class="">
+<li><code><a title="rtt.library.Rota.add" href="#rtt.library.Rota.add">add</a></code></li>
+<li><code><a title="rtt.library.Rota.addRole" href="#rtt.library.Rota.addRole">addRole</a></code></li>
+<li><code><a title="rtt.library.Rota.personnel" href="#rtt.library.Rota.personnel">personnel</a></code></li>
+<li><code><a title="rtt.library.Rota.sub" href="#rtt.library.Rota.sub">sub</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rtt.library.Station" href="#rtt.library.Station">Station</a></code></h4>
+<ul class="two-column">
+<li><code><a title="rtt.library.Station.activate" href="#rtt.library.Station.activate">activate</a></code></li>
+<li><code><a title="rtt.library.Station.active" href="#rtt.library.Station.active">active</a></code></li>
+<li><code><a title="rtt.library.Station.add" href="#rtt.library.Station.add">add</a></code></li>
+<li><code><a title="rtt.library.Station.appliance" href="#rtt.library.Station.appliance">appliance</a></code></li>
+<li><code><a title="rtt.library.Station.appliances" href="#rtt.library.Station.appliances">appliances</a></code></li>
+<li><code><a title="rtt.library.Station.data" href="#rtt.library.Station.data">data</a></code></li>
+<li><code><a title="rtt.library.Station.deactivate" href="#rtt.library.Station.deactivate">deactivate</a></code></li>
+<li><code><a title="rtt.library.Station.offRun" href="#rtt.library.Station.offRun">offRun</a></code></li>
+<li><code><a title="rtt.library.Station.personnel" href="#rtt.library.Station.personnel">personnel</a></code></li>
+<li><code><a title="rtt.library.Station.remove" href="#rtt.library.Station.remove">remove</a></code></li>
+<li><code><a title="rtt.library.Station.role" href="#rtt.library.Station.role">role</a></code></li>
+<li><code><a title="rtt.library.Station.roles" href="#rtt.library.Station.roles">roles</a></code></li>
+<li><code><a title="rtt.library.Station.rota" href="#rtt.library.Station.rota">rota</a></code></li>
+<li><code><a title="rtt.library.Station.rotas" href="#rtt.library.Station.rotas">rotas</a></code></li>
+<li><code><a title="rtt.library.Station.vehicle" href="#rtt.library.Station.vehicle">vehicle</a></code></li>
+<li><code><a title="rtt.library.Station.vehicles" href="#rtt.library.Station.vehicles">vehicles</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="rtt.library.Vehicle" href="#rtt.library.Vehicle">Vehicle</a></code></h4>
+<ul class="">
+<li><code><a title="rtt.library.Vehicle.active" href="#rtt.library.Vehicle.active">active</a></code></li>
+<li><code><a title="rtt.library.Vehicle.callsign" href="#rtt.library.Vehicle.callsign">callsign</a></code></li>
+<li><code><a title="rtt.library.Vehicle.offRun" href="#rtt.library.Vehicle.offRun">offRun</a></code></li>
+<li><code><a title="rtt.library.Vehicle.onRun" href="#rtt.library.Vehicle.onRun">onRun</a></code></li>
+<li><code><a title="rtt.library.Vehicle.plate" href="#rtt.library.Vehicle.plate">plate</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+</footer>
+</body>
+</html>
