@@ -2,7 +2,7 @@
 """
 Created on Fri Sep 18 23:38:27 2020
 
-Script to manage turnouts every shift
+Package to manage turnouts every shift
 
 @author: Arif Er
 """
@@ -418,7 +418,7 @@ class Vehicle(Appliance):
     def __repr__(self):
         return f"{self.callsign} ({self.plate}) -- {'On run' if self.active else 'Off run'}"
 
-    def __call__(self) -> Dict[str, Dict[Role, int], List[int]]:
+    def __call__(self) -> Dict[str, Union[str, Dict[Role, int], List[int]]]:
         """
         Returns human-readable data.
         """
@@ -499,7 +499,7 @@ class Rota(object):
             }
 
     @safeLoad
-    def __add__(self, other: Union["Rota", Personnel, List["Rota", Personnel]]) -> None:
+    def __add__(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]) -> None:
         if isinstance(other, Rota):
             self._personnel = {**self._personnel, **other._personnel}
         elif isinstance(other, Personnel):
@@ -519,7 +519,7 @@ class Rota(object):
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
     @safeLoad
-    def __sub__(self, other: Union["Rota", Personnel, List["Rota", Personnel]]) -> None:
+    def __sub__(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]) -> None:
         if isinstance(other, Rota):
             self._personnel = list(set(self.personnel) - set(other.personnel))
         elif isinstance(other, Personnel):
@@ -538,7 +538,7 @@ class Rota(object):
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
-    def add(self, other: Union["Rota", Personnel, List["Rota", Personnel]]):
+    def add(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]):
         """
         Adds Personnel to the Rota.
 
@@ -550,7 +550,7 @@ class Rota(object):
         """
         self + other
 
-    def sub(self, other: Union["Rota", Personnel, List["Rota", Personnel]]):
+    def sub(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]):
         """
         Removes Personnel from the Rota.
 
@@ -654,7 +654,11 @@ class Station(object):
         return [i for i in self.vehicles.values() if i.active]
 
     @property
-    def data(self) -> Dict[str, Role, Appliance, Vehicle, Rota]:
+    def data(self) -> Dict[Union[str, int], Union[str, Role, Appliance, Vehicle, Rota]]:
+        """
+        Returns human-readable data.
+        :return:
+        """
         return {**self.roles, **self.appliances, **self.vehicles, **self.rotas}
 
     def __call__(self, arg: Union[str, int, _assets]) -> Union[_assets, dict]:
@@ -909,7 +913,7 @@ class Station(object):
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Station>")
 
-    def __sub__(self, other: Union[str, _assets, List[str, _assets]]) -> None:
+    def __sub__(self, other: Union[str, _assets, List[Union[str, _assets]]]) -> None:
         if isinstance(other, Rota):
             self._rotas.pop(other.rota, None)
         elif isinstance(other, Role):
@@ -953,7 +957,7 @@ class Station(object):
         """
         return self + other
 
-    def remove(self, other: Union[str, _assets, List[str, _assets]]) -> None:
+    def remove(self, other: Union[str, _assets, List[Union[str, _assets]]]) -> None:
         """
         Removes an asset or a list of assets from the Station.
 
