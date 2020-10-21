@@ -29,12 +29,32 @@ jobs:
         with:
           python-version: 3.6
 
-      - name: Install pdoc3 0.9.1 if not installed
+      - name: Install pdoc3 0.9.1
         run: |
           python -m pip install --upgrade pip
           pip install pdoc3==0.9.1
           echo "Generating documentation in docs/ directory"
-
+          
       - name: Creates documentations
         run: |
-          pdoc --html `ls -d */ | grep -v -e 'venv' -e 'docs' -e 'pycache'` -o docs/ --force
+          [ -f ./docs/index.html ] && mv ./docs/index.html ./index.html
+          rm -r ./docs
+          pdoc --html `ls -d */ | grep -v -e 'venv' -e 'docs' -e 'pycache'` -o ./docs/ --force
+          mv ./index.html ./docs/index.html
+          
+      - name: Switch repository from HTTPS to SSH
+        run: |
+          [[ ${{ secrets.SSH }} ]] && git remote set-url origin ${{ secrets.SSH }}
+          
+      - name: Commit changes to docs folder
+        run: |
+          [[ ${{ secrets.SSH }} ]] && git add ./docs && git commit -m "Create documentation"
+      
+      - name: Fetch from branch
+        run: |
+          [[ ${{ secrets.SSH }} ]] && git fetch origin ${{ github.ref }}
+          
+      - name: Push to branch
+        run: |
+          [[ ${{ secrets.SSH }} ]] && git push origin HEAD:${{ github.ref}}
+          
