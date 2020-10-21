@@ -41,20 +41,14 @@ jobs:
           rm -r ./docs
           pdoc --html `ls -d */ | grep -v -e 'venv' -e 'docs' -e 'pycache'` -o ./docs/ --force
           mv ./index.html ./docs/index.html
-          
-      - name: Switch repository from HTTPS to SSH
-        run: |
-          [[ ${{ secrets.SSH }} ]] && git remote set-url origin ${{ secrets.SSH }}
-          
+         
       - name: Commit changes to docs folder
         run: |
+          git config --local user.name "$GITHUB_ACTOR"
           [[ ${{ secrets.SSH }} ]] && git add ./docs && git commit -m "Create documentation"
-      
-      - name: Fetch from branch
-        run: |
-          [[ ${{ secrets.SSH }} ]] && git fetch origin ${{ github.ref }}
-          
-      - name: Push to branch
-        run: |
-          [[ ${{ secrets.SSH }} ]] && git push origin HEAD:${{ github.ref}}
-          
+       
+      - name: Push changes to origin
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
