@@ -632,6 +632,7 @@ class Station(object):
         self._roles = self._appliances = self._vehicles = self._rotas = {}
         if not self._fileName:
             self._fileName = self.name
+        self._load()
 
     @property
     def roles(self) -> Dict[str, Role]:
@@ -675,7 +676,7 @@ class Station(object):
             return self.data
 
     def _addAsset(self, arg1: Union[_assets, str, int, List[_assets]], Asset: Type[_assets],
-                  assetDict: Dict[str, _assets], assetIdentifier: str, **kwargs) \
+                  assetIdentifier: str, assetDict: str = None, **kwargs) \
             -> Union[_assets, List[_assets]]:
         """
         General Asset generation method. The Assets can be any from Role, Appliance, Vehicle, or Rota.
@@ -690,8 +691,9 @@ class Station(object):
                 (list):  List of Assets to add to the Station.
 
             Asset (class):           Asset to generate.
-            assetDict (dict):        Dictionary containing the Assets of the Station.
+                        # Role, Appliance, Vehicle, Rota
             assetIdentifier (str):   Unique identifier of the Asset.
+            assetDict (str):         Unique dictionary identifier of the Asset.
             kwargs:                  Remaining arguments required to create the Asset.
 
         Returns:
@@ -700,6 +702,13 @@ class Station(object):
         Raises:
             TypeError: If kwargs are of the incorrect types
         """
+        if assetDict:
+            if not isinstance(assetDict) or assetDict not in self.__dir__():
+                raise AttributeError(f"{str(assetDict)} is not an attribute of Station.")
+            _assetDict, assetDict = assetDict, self.__getattribute__(assetDict)
+        else:
+            _assetDict, assetDict = f"_{assetIdentifier}s", self.__getattribute__(f"_{assetIdentifier}s")
+
         if isinstance(arg1, Asset) and arg1.__getattribute__(assetIdentifier) in assetDict:
             return assetDict[arg1.__getattribute__(assetIdentifier)]
         elif isinstance(arg1, str) and arg1 in assetDict:
@@ -707,7 +716,8 @@ class Station(object):
         elif isinstance(arg1, list):
             data = []
             data.extend(Asset for i in arg1 if isinstance(i, Asset))
-            print(f"{', '.join([str(i) for i in arg1 if arg1 is not isinstance(i, Asset)])}")
+            if len(data) < len(arg1):
+                print(f"{', '.join([str(i) for i in arg1 if arg1 is not isinstance(i, Asset)])}")
             return data
         else:  # Tries to create the asset using the arguments
             asset = Asset(arg1, **kwargs)
@@ -718,7 +728,7 @@ class Station(object):
                 raise TypeError(f"{arg1} has already been declared as a <{self.data[identifier]}>")
 
             if identifier not in assetDict:
-                assetDict.update({identifier: asset})
+                self.__getattribute__(_assetDict).update({identifier: asset})
                 self._save()
                 return asset
             else:
@@ -756,7 +766,7 @@ class Station(object):
         Raises:
             TypeError: If arguments are of the incorrect types.
         """
-        return self._addAsset(name, Role, self.roles, 'role',
+        return self._addAsset(name, Role, 'role',
                               constraint=constraint, rule=rule, inherit=inherit)
 
     def appliance(self, name: Union[Appliance, str, List[Appliance]],
@@ -785,7 +795,7 @@ class Station(object):
             TypeError:  If arguments are of the incorrect types.
             ValueError: Crew not added or maximum is more than minimum.
         """
-        return self._addAsset(name, Appliance, self.appliances, 'appliance',
+        return self._addAsset(name, Appliance, 'appliance',
                               crew=crew, minimum=minimum, maximum=maximum)
 
     def vehicle(self, callsign: Union[Vehicle, str, List[Vehicle]],
@@ -808,7 +818,7 @@ class Station(object):
         Raises:
             TypeError: If arguments are of the incorrect type.
         """
-        return self._addAsset(callsign, Vehicle, self.vehicles, 'callsign',
+        return self._addAsset(callsign, Vehicle, 'callsign', '_vehicles',
                               appliance=appliance, plateNumber=plateNumber, active=active)
 
     def rota(self, rota: Union[Rota, int, str, List[Rota]], fileName: str = None, rootDir: str = '.') \
@@ -830,7 +840,7 @@ class Station(object):
 
         The file will be saved with the *.rt extension.
         """
-        return self._addAsset(rota, Rota, self.rotas, 'rota',
+        return self._addAsset(rota, Rota, 'rota',
                               fileName=fileName, rootDir=rootDir)
 
     def personnel(self, rota: Union[Rota, int, List[Union[Rota, int]]],
@@ -1027,9 +1037,14 @@ class Station(object):
         """
         file = os.path.splitext(os.path.join(self._rootDir, self._fileName))[0] + ".stn"
         if not os.path.exists(os.path.abspath(os.path.expanduser(file))):
-            print("File does not exist. Creating new rota.")
+            print("File does not exist. Creating new station.")
             self._save()  # Creates data file
         else:
             with open(os.path.abspath(os.path.expanduser(file)), 'rb') as f:
                 data = pickle.load(f)
-            self._roles, self._appliances, self._rotas = data
+            self._roles, self._appliances, self._vehicles, self._rotas = data
+
+
+def loadGlobal(data: dict):
+    for i in data:
+        globals()[i] = data[i]
