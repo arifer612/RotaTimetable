@@ -451,7 +451,7 @@ class Rota(object):
         personnel (List[Personnel]): A list of all the Personnel assigned to the Rota.
     """
 
-    def __init__(self, fileName: str = None, rootDir: str = ".", rota: Union[str, int] = None):
+    def __init__(self, rota: Union[str, int] = None, fileName: str = None, rootDir: str = "."):
         """
         Args:
             fileName (str):  Name of the save file. If not specified, the default file name will be set to
@@ -499,56 +499,78 @@ class Rota(object):
             }
 
     @safeLoad
-    def __add__(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]) -> None:
+    def __add__(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]) \
+            -> Union[Personnel, List[Personnel]]:
         if isinstance(other, Rota):
             self._personnel = {**self._personnel, **other._personnel}
+            return list(other._personnel.values())
         elif isinstance(other, Personnel):
             if other.id not in self.personnel:
                 self._personnel.update({other.id: other})
+                return other
         elif isinstance(other, list):
-            err = []
+            err, new = [], []
             for i in other:
                 try:
-                    self + i
+                    new.append(self + i)
                 except TypeError:
                     if type(i) not in err:
                         err.append(type(i))
             if err:
                 print(f"{', '.join(err)} cannot be operated on <Rota>")
+            return new
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
     @safeLoad
-    def __sub__(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]) -> None:
+    def __sub__(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]) -> Union[str, List[str]]:
         if isinstance(other, Rota):
             self._personnel = list(set(self.personnel) - set(other.personnel))
+            return list(other.personnel)
         elif isinstance(other, Personnel):
             if other.id in self.personnel:
                 self._personnel.pop(list(self.personnel).index(other.id))
+                return other.id
         elif isinstance(other, list):
-            err = []
+            err, rem = [], []
             for i in other:
                 try:
-                    self - i
+                    rem(self - i)
                 except TypeError:
                     if type(i) not in err:
                         err.append(type(i))
             if err:
                 print(f"{', '.join(err)} cannot be operated on <Rota>")
+            return rem
         else:
             raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
-    def add(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]):
+    def add(self, other: Union["Rota", Personnel, str, List[Union["Rota", Personnel, str]]], *args, **kwargs)\
+            -> Union[Personnel, List[Personnel]]:
         """
-        Adds Personnel to the Rota.
+        Adds or creates Personnel to the Rota.
 
         Args:
             other (list, Personnel, Rota): A list of Personnel, a Personnel, or a Rota to add to the Rota.
+            args:                          Optional arguments required to create a new personnel.
+            kwargs:                        Optional keyword arguments required to create a new personnel.
+
+        Returns:
+            The Personnel added to the Rota.
 
         Raises:
             TypeError: If the item(s) being added to the Rota is/are not Personnel or Rota.
         """
-        self + other
+        if isinstance(other, (Personnel, Rota)):
+            return self + other
+        elif isinstance(other, str):
+            newPersonnel = Personnel(other, *args, **kwargs)
+            return self + newPersonnel
+        elif isinstance(other, list):
+            newPersonnel = [self.add(i) for i in other]
+            return newPersonnel
+        else:
+            raise TypeError(f"{type(other)} cannot be operated on <Rota>")
 
     def sub(self, other: Union["Rota", Personnel, List[Union["Rota", Personnel]]]):
         """
@@ -703,13 +725,14 @@ class Station(object):
             TypeError: If kwargs are of the incorrect types
         """
         if assetDict:
-            if not isinstance(assetDict) or assetDict not in self.__dir__():
+            if not isinstance(assetDict, str) or assetDict not in self.__dir__():
                 raise AttributeError(f"{str(assetDict)} is not an attribute of Station.")
             _assetDict, assetDict = assetDict, self.__getattribute__(assetDict)
         else:
             _assetDict, assetDict = f"_{assetIdentifier}s", self.__getattribute__(f"_{assetIdentifier}s")
 
         if isinstance(arg1, Asset) and arg1.__getattribute__(assetIdentifier) in assetDict:
+
             return assetDict[arg1.__getattribute__(assetIdentifier)]
         elif isinstance(arg1, str) and arg1 in assetDict:
             return assetDict[arg1]
@@ -769,8 +792,8 @@ class Station(object):
         return self._addAsset(name, Role, 'role',
                               constraint=constraint, rule=rule, inherit=inherit)
 
-    def appliance(self, name: Union[Appliance, str, List[Appliance]],
-                  crew: Dict[Vehicle, int] = None, minimum: int = 1, maximum: int = 1) \
+    def appliance(self, name: Union[Role, str, List[Appliance]],
+                  crew: Dict[Role, int] = None, minimum: int = 1, maximum: int = 1) \
             -> Union[Appliance, List[Appliance]]:
         """
         Creates and adds an Appliance as a Station asset.
